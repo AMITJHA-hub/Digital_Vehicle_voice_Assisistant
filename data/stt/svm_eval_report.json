@@ -63,15 +63,15 @@
       "class_weight": "balanced",
       "random_state": 42
     },
-    "training_duration_seconds": 0.0745,
+    "training_duration_seconds": 0.0835,
     "latency_ms": {
-      "mean_latency_ms": 1.7249803590566444,
-      "p50_latency_ms": 1.5016225006547756,
-      "p90_latency_ms": 2.1517374012546497,
-      "p95_latency_ms": 2.528624299611692,
-      "p99_latency_ms": 5.499797700449558,
-      "min_latency_ms": 1.4327049993880792,
-      "max_latency_ms": 10.68718599890417,
+      "mean_latency_ms": 1.7468396929762093,
+      "p50_latency_ms": 1.5124565006772173,
+      "p90_latency_ms": 2.16453349985386,
+      "p95_latency_ms": 2.581517249927856,
+      "p99_latency_ms": 6.368428710047737,
+      "min_latency_ms": 1.4486920008494053,
+      "max_latency_ms": 9.970912999051507,
       "total_measurements": 1000
     },
     "test_metrics": {
