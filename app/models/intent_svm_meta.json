@@ -1,11 +1,12 @@
 {
   "dataset_file": "commands.jsonl",
-  "dataset_hash": "54e8c5f0dd3468f9e626874a3da83850801bca31b255bd0b087ad0456afaa11b",
-  "total_dataset_records": 310,
-  "train_samples": 224,
-  "dev_samples": 48,
-  "test_samples": 50,
+  "dataset_hash": "2624c567546bfafa4668390c967fe0047a6dabb3fea860d58c3ef4a81b8d2dfc",
+  "total_dataset_records": 387,
+  "train_samples": 275,
+  "dev_samples": 60,
+  "test_samples": 63,
   "classes": [
+    "CLARIFY",
     "CLOSE_DOOR",
     "EMERGENCY_OFF",
     "EMERGENCY_ON",
@@ -17,6 +18,8 @@
     "GET_LIGHTS_STATUS",
     "GET_SENSOR_STATUS",
     "GET_TEMPERATURE",
+    "GLOBAL_OFF",
+    "GLOBAL_ON",
     "GREETING",
     "HELP",
     "LIGHTS_OFF",
@@ -28,26 +31,29 @@
     "UNSUPPORTED"
   ],
   "class_counts_train": {
-    "LIGHTS_ON": 25,
-    "LIGHTS_OFF": 21,
+    "LIGHTS_ON": 26,
+    "LIGHTS_OFF": 23,
     "GET_LIGHTS_STATUS": 4,
-    "TURN_AC_ON": 21,
-    "TURN_AC_OFF": 22,
+    "TURN_AC_ON": 23,
+    "TURN_AC_OFF": 27,
     "GET_AC_STATUS": 3,
-    "OPEN_DOOR": 20,
-    "CLOSE_DOOR": 20,
+    "OPEN_DOOR": 21,
+    "CLOSE_DOOR": 22,
     "GET_DOOR_STATUS": 5,
     "GET_TEMPERATURE": 8,
     "GET_HUMIDITY": 6,
     "GET_DISTANCE": 6,
     "GET_SENSOR_STATUS": 6,
     "EMERGENCY_ON": 7,
-    "EMERGENCY_OFF": 7,
+    "EMERGENCY_OFF": 8,
     "GREETING": 5,
     "HELP": 5,
     "EXIT": 5,
     "STOP_LISTENING": 4,
-    "UNSUPPORTED": 24
+    "UNSUPPORTED": 32,
+    "GLOBAL_OFF": 14,
+    "GLOBAL_ON": 8,
+    "CLARIFY": 7
   },
   "hyperparameters": {
     "ngram_range": [
@@ -62,30 +68,30 @@
     "class_weight": "balanced",
     "random_state": 42
   },
-  "training_duration_seconds": 0.0835,
+  "training_duration_seconds": 0.0855,
   "latency_ms": {
-    "mean_latency_ms": 1.7468396929762093,
-    "p50_latency_ms": 1.5124565006772173,
-    "p90_latency_ms": 2.16453349985386,
-    "p95_latency_ms": 2.581517249927856,
-    "p99_latency_ms": 6.368428710047737,
-    "min_latency_ms": 1.4486920008494053,
-    "max_latency_ms": 9.970912999051507,
+    "mean_latency_ms": 1.7003191409903593,
+    "p50_latency_ms": 1.5751120004097174,
+    "p90_latency_ms": 2.0115009006076434,
+    "p95_latency_ms": 2.3707220496817167,
+    "p99_latency_ms": 3.429200030650463,
+    "min_latency_ms": 1.4560850004272652,
+    "max_latency_ms": 9.997465999731503,
     "total_measurements": 1000
   },
   "test_metrics": {
-    "accuracy": 0.88,
-    "macro_precision": 0.9275,
-    "macro_recall": 0.875,
-    "macro_f1": 0.878968253968254,
-    "weighted_f1": 0.8758730158730158
+    "accuracy": 0.873015873015873,
+    "macro_precision": 0.9094202898550724,
+    "macro_recall": 0.8768115942028986,
+    "macro_f1": 0.8753169154770986,
+    "weighted_f1": 0.8731146649693016
   },
   "dev_metrics": {
-    "accuracy": 0.7083333333333334,
-    "macro_precision": 0.735,
-    "macro_recall": 0.7041666666666666,
-    "macro_f1": 0.6915476190476191,
-    "weighted_f1": 0.6797123015873016
+    "accuracy": 0.6833333333333333,
+    "macro_precision": 0.7202898550724638,
+    "macro_recall": 0.7000000000000001,
+    "macro_f1": 0.6828429770077367,
+    "weighted_f1": 0.6670091896407686
   },
   "model_file": "intent_svm.joblib"
 }

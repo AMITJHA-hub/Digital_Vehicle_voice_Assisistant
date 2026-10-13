@@ -43,10 +43,18 @@ class CommandDispatcher:
             return self._handle_ambiguous(command)
 
         if command.status == CommandStatus.REJECTED:
+            msg = (command.plan and command.plan.clarification_prompt) or command.error_message or "I cannot execute this compound command because it contains unsupported or ambiguous actions."
             return DispatchResult(
                 intent=IntentType.UNSUPPORTED,
-                response_text=command.error_message or "I cannot execute this compound command because it contains unsupported or ambiguous actions.",
+                response_text=msg,
                 success=False,
+            )
+
+        if command.status == CommandStatus.VALID and not command.actions and command.plan and command.plan.clarification_prompt:
+            return DispatchResult(
+                intent=command.intent,
+                response_text=command.plan.clarification_prompt,
+                success=True,
             )
 
         if command.status == CommandStatus.UNSUPPORTED or not command.actions:
@@ -281,8 +289,36 @@ class CommandDispatcher:
             metadata={"doors": doors},
         )
 
+    def _handle_global_off(self, cmd: ParsedCommand) -> DispatchResult:
+        res_lights = self.hardware.set_lights(False)
+        res_ac = self.hardware.set_ac(False)
+        if self.hardware.get_emergency_status():
+            self.hardware.set_emergency(False)
+        is_sim = res_lights.is_simulated or res_ac.is_simulated
+        prefix = "[Simulated] " if is_sim else ""
+        text = (
+            f"{prefix}Switched off all controllable vehicle systems: headlights, "
+            "air conditioning, and emergency hazard. Doors and safety systems were kept unchanged."
+        )
+        return DispatchResult(intent=cmd.intent, response_text=text, success=True)
+
+    def _handle_global_on(self, cmd: ParsedCommand) -> DispatchResult:
+        res_lights = self.hardware.set_lights(True)
+        res_ac = self.hardware.set_ac(True)
+        is_sim = res_lights.is_simulated or res_ac.is_simulated
+        prefix = "[Simulated] " if is_sim else ""
+        text = (
+            f"{prefix}Switched on vehicle headlights and air conditioning. "
+            "Doors and hazard mode were kept safe."
+        )
+        return DispatchResult(intent=cmd.intent, response_text=text, success=True)
+
+    def _handle_clarify(self, cmd: ParsedCommand) -> DispatchResult:
+        prompt = (cmd.plan and cmd.plan.clarification_prompt) or cmd.error_message or "Could you please clarify your request?"
+        return DispatchResult(intent=cmd.intent, response_text=prompt, success=True)
+
     def _handle_ambiguous(self, cmd: ParsedCommand) -> DispatchResult:
-        text = cmd.error_message or "Your request is ambiguous. Please specify driver door, passenger door, or both doors."
+        text = (cmd.plan and cmd.plan.clarification_prompt) or cmd.error_message or "Your request is ambiguous. Please specify driver door, passenger door, or both doors."
         return DispatchResult(
             intent=cmd.intent,
             response_text=text,

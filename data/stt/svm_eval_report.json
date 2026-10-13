@@ -1,12 +1,13 @@
 {
   "metadata": {
     "dataset_file": "commands.jsonl",
-    "dataset_hash": "54e8c5f0dd3468f9e626874a3da83850801bca31b255bd0b087ad0456afaa11b",
-    "total_dataset_records": 310,
-    "train_samples": 224,
-    "dev_samples": 48,
-    "test_samples": 50,
+    "dataset_hash": "2624c567546bfafa4668390c967fe0047a6dabb3fea860d58c3ef4a81b8d2dfc",
+    "total_dataset_records": 387,
+    "train_samples": 275,
+    "dev_samples": 60,
+    "test_samples": 63,
     "classes": [
+      "CLARIFY",
       "CLOSE_DOOR",
       "EMERGENCY_OFF",
       "EMERGENCY_ON",
@@ -18,6 +19,8 @@
       "GET_LIGHTS_STATUS",
       "GET_SENSOR_STATUS",
       "GET_TEMPERATURE",
+      "GLOBAL_OFF",
+      "GLOBAL_ON",
       "GREETING",
       "HELP",
       "LIGHTS_OFF",
@@ -29,26 +32,29 @@
       "UNSUPPORTED"
     ],
     "class_counts_train": {
-      "LIGHTS_ON": 25,
-      "LIGHTS_OFF": 21,
+      "LIGHTS_ON": 26,
+      "LIGHTS_OFF": 23,
       "GET_LIGHTS_STATUS": 4,
-      "TURN_AC_ON": 21,
-      "TURN_AC_OFF": 22,
+      "TURN_AC_ON": 23,
+      "TURN_AC_OFF": 27,
       "GET_AC_STATUS": 3,
-      "OPEN_DOOR": 20,
-      "CLOSE_DOOR": 20,
+      "OPEN_DOOR": 21,
+      "CLOSE_DOOR": 22,
       "GET_DOOR_STATUS": 5,
       "GET_TEMPERATURE": 8,
       "GET_HUMIDITY": 6,
       "GET_DISTANCE": 6,
       "GET_SENSOR_STATUS": 6,
       "EMERGENCY_ON": 7,
-      "EMERGENCY_OFF": 7,
+      "EMERGENCY_OFF": 8,
       "GREETING": 5,
       "HELP": 5,
       "EXIT": 5,
       "STOP_LISTENING": 4,
-      "UNSUPPORTED": 24
+      "UNSUPPORTED": 32,
+      "GLOBAL_OFF": 14,
+      "GLOBAL_ON": 8,
+      "CLARIFY": 7
     },
     "hyperparameters": {
       "ngram_range": [
@@ -63,40 +69,46 @@
       "class_weight": "balanced",
       "random_state": 42
     },
-    "training_duration_seconds": 0.0835,
+    "training_duration_seconds": 0.0855,
     "latency_ms": {
-      "mean_latency_ms": 1.7468396929762093,
-      "p50_latency_ms": 1.5124565006772173,
-      "p90_latency_ms": 2.16453349985386,
-      "p95_latency_ms": 2.581517249927856,
-      "p99_latency_ms": 6.368428710047737,
-      "min_latency_ms": 1.4486920008494053,
-      "max_latency_ms": 9.970912999051507,
+      "mean_latency_ms": 1.7003191409903593,
+      "p50_latency_ms": 1.5751120004097174,
+      "p90_latency_ms": 2.0115009006076434,
+      "p95_latency_ms": 2.3707220496817167,
+      "p99_latency_ms": 3.429200030650463,
+      "min_latency_ms": 1.4560850004272652,
+      "max_latency_ms": 9.997465999731503,
       "total_measurements": 1000
     },
     "test_metrics": {
-      "accuracy": 0.88,
-      "macro_precision": 0.9275,
-      "macro_recall": 0.875,
-      "macro_f1": 0.878968253968254,
-      "weighted_f1": 0.8758730158730158
+      "accuracy": 0.873015873015873,
+      "macro_precision": 0.9094202898550724,
+      "macro_recall": 0.8768115942028986,
+      "macro_f1": 0.8753169154770986,
+      "weighted_f1": 0.8731146649693016
     },
     "dev_metrics": {
-      "accuracy": 0.7083333333333334,
-      "macro_precision": 0.735,
-      "macro_recall": 0.7041666666666666,
-      "macro_f1": 0.6915476190476191,
-      "weighted_f1": 0.6797123015873016
+      "accuracy": 0.6833333333333333,
+      "macro_precision": 0.7202898550724638,
+      "macro_recall": 0.7000000000000001,
+      "macro_f1": 0.6828429770077367,
+      "weighted_f1": 0.6670091896407686
     }
   },
   "layer_a_svm_test": {
-    "num_samples": 50,
-    "accuracy": 0.88,
-    "macro_precision": 0.9275,
-    "macro_recall": 0.875,
-    "macro_f1": 0.878968253968254,
-    "weighted_f1": 0.8758730158730158,
+    "num_samples": 63,
+    "accuracy": 0.873015873015873,
+    "macro_precision": 0.9094202898550724,
+    "macro_recall": 0.8768115942028986,
+    "macro_f1": 0.8753169154770986,
+    "weighted_f1": 0.8731146649693016,
     "per_class": {
+      "CLARIFY": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1_score": 0.8888888888888888,
+        "support": 4
+      },
       "CLOSE_DOOR": {
         "precision": 0.8,
         "recall": 1.0,
@@ -163,6 +175,18 @@
         "f1_score": 1.0,
         "support": 2
       },
+      "GLOBAL_OFF": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 4
+      },
+      "GLOBAL_ON": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1_score": 0.8,
+        "support": 2
+      },
       "GREETING": {
         "precision": 1.0,
         "recall": 1.0,
@@ -201,21 +225,21 @@
       },
       "TURN_AC_OFF": {
         "precision": 1.0,
-        "recall": 0.5,
-        "f1_score": 0.6666666666666666,
-        "support": 4
+        "recall": 0.6,
+        "f1_score": 0.75,
+        "support": 5
       },
       "TURN_AC_ON": {
-        "precision": 0.5,
-        "recall": 1.0,
-        "f1_score": 0.6666666666666666,
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1_score": 0.5,
         "support": 3
       },
       "UNSUPPORTED": {
         "precision": 1.0,
-        "recall": 1.0,
-        "f1_score": 1.0,
-        "support": 8
+        "recall": 0.9,
+        "f1_score": 0.9473684210526315,
+        "support": 10
       }
     },
     "confusion_matrix": [
@@ -239,9 +263,38 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         0
       ],
       [
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
         0,
         1,
         0,
@@ -261,9 +314,12 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
+        0,
         0,
         0,
         2,
@@ -283,26 +339,6 @@
         0,
         0,
         0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
@@ -326,10 +362,91 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         1,
         0
       ],
       [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -352,9 +469,12 @@
         0
       ],
       [
+        0,
+        0,
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
         0,
         0,
         0,
@@ -381,22 +501,6 @@
         0,
         0,
         0,
-        2,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
         0,
         0,
         0,
@@ -404,53 +508,6 @@
         0,
         0,
         0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        2,
         0,
         0,
         0,
@@ -481,9 +538,90 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         0
       ],
       [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -506,6 +644,9 @@
         0
       ],
       [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -541,6 +682,9 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         1,
         1,
         0,
@@ -550,6 +694,9 @@
         0
       ],
       [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -588,6 +735,9 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         1,
         0,
         0,
@@ -611,30 +761,36 @@
         0,
         0,
         0,
-        2,
-        2,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
         3,
+        2,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
         0
       ],
       [
@@ -651,13 +807,16 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
         0,
         0,
         0,
-        8
+        0,
+        0,
+        9
       ]
     ],
     "predictions": [
@@ -671,7 +830,7 @@
       "TURN_AC_ON",
       "TURN_AC_ON",
       "TURN_AC_ON",
-      "TURN_AC_ON",
+      "CLARIFY",
       "TURN_AC_OFF",
       "GET_AC_STATUS",
       "TURN_AC_ON",
@@ -710,7 +869,20 @@
       "UNSUPPORTED",
       "UNSUPPORTED",
       "UNSUPPORTED",
-      "UNSUPPORTED"
+      "UNSUPPORTED",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_ON",
+      "GLOBAL_ON",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "TURN_AC_OFF",
+      "UNSUPPORTED",
+      "GLOBAL_ON"
     ],
     "true_labels": [
       "LIGHTS_ON",
@@ -762,17 +934,36 @@
       "UNSUPPORTED",
       "UNSUPPORTED",
       "UNSUPPORTED",
+      "UNSUPPORTED",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_ON",
+      "GLOBAL_ON",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "TURN_AC_OFF",
+      "UNSUPPORTED",
       "UNSUPPORTED"
     ]
   },
   "layer_a_svm_dev": {
-    "num_samples": 48,
-    "accuracy": 0.7083333333333334,
-    "macro_precision": 0.735,
-    "macro_recall": 0.7041666666666666,
-    "macro_f1": 0.6915476190476191,
-    "weighted_f1": 0.6797123015873016,
+    "num_samples": 60,
+    "accuracy": 0.6833333333333333,
+    "macro_precision": 0.7202898550724638,
+    "macro_recall": 0.7000000000000001,
+    "macro_f1": 0.6828429770077367,
+    "weighted_f1": 0.6670091896407686,
     "per_class": {
+      "CLARIFY": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 3
+      },
       "CLOSE_DOOR": {
         "precision": 0.75,
         "recall": 1.0,
@@ -839,6 +1030,18 @@
         "f1_score": 1.0,
         "support": 2
       },
+      "GLOBAL_OFF": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1_score": 0.75,
+        "support": 4
+      },
+      "GLOBAL_ON": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1_score": 0.6666666666666666,
+        "support": 2
+      },
       "GREETING": {
         "precision": 1.0,
         "recall": 0.5,
@@ -858,9 +1061,9 @@
         "support": 3
       },
       "LIGHTS_ON": {
-        "precision": 0.75,
-        "recall": 1.0,
-        "f1_score": 0.8571428571428571,
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1_score": 0.5,
         "support": 3
       },
       "OPEN_DOOR": {
@@ -882,16 +1085,16 @@
         "support": 2
       },
       "TURN_AC_ON": {
-        "precision": 0.6,
-        "recall": 1.0,
-        "f1_score": 0.75,
-        "support": 3
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1_score": 0.6,
+        "support": 4
       },
       "UNSUPPORTED": {
-        "precision": 0.6,
-        "recall": 0.75,
-        "f1_score": 0.6666666666666666,
-        "support": 8
+        "precision": 0.6666666666666666,
+        "recall": 0.6,
+        "f1_score": 0.631578947368421,
+        "support": 10
       }
     },
     "confusion_matrix": [
@@ -915,9 +1118,38 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
         0
       ],
       [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
         0,
         1,
         1,
@@ -937,9 +1169,12 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
+        0,
         0,
         0,
         2,
@@ -959,6 +1194,8 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
@@ -974,6 +1211,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -981,14 +1219,19 @@
         0,
         0,
         0,
-        2
+        0,
+        0,
+        1
       ],
       [
         0,
         0,
         0,
         0,
+        0,
         1,
+        0,
+        0,
         0,
         0,
         0,
@@ -1011,7 +1254,10 @@
         0,
         0,
         0,
+        0,
         1,
+        0,
+        0,
         0,
         0,
         0,
@@ -1028,15 +1274,18 @@
         1
       ],
       [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         1,
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
         0,
         0,
         0,
@@ -1050,6 +1299,7 @@
         0
       ],
       [
+        0,
         0,
         0,
         0,
@@ -1069,9 +1319,12 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
+        0,
         0,
         0,
         0,
@@ -1091,9 +1344,12 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
+        0,
         0,
         0,
         0,
@@ -1113,9 +1369,64 @@
         0,
         0,
         0,
+        0,
+        0,
         0
       ],
       [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -1138,6 +1449,9 @@
         0
       ],
       [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -1172,26 +1486,6 @@
         0,
         0,
         0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -1199,49 +1493,6 @@
         0,
         0,
         0,
-        1,
-        1,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        3,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        3,
         0,
         0,
         0,
@@ -1267,28 +1518,34 @@
         1,
         0,
         0,
+        0,
+        1,
+        1,
         0
       ],
       [
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
         0
       ],
       [
@@ -1311,6 +1568,9 @@
         0,
         0,
         3,
+        0,
+        0,
+        0,
         0
       ],
       [
@@ -1328,7 +1588,85 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
         1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
         0,
         0,
         0,
@@ -1343,7 +1681,7 @@
       "LIGHTS_ON",
       "TURN_AC_ON",
       "GET_LIGHTS_STATUS",
-      "LIGHTS_ON",
+      "TURN_AC_ON",
       "TURN_AC_ON",
       "EMERGENCY_OFF",
       "GET_AC_STATUS",
@@ -1374,7 +1712,7 @@
       "UNSUPPORTED",
       "HELP",
       "UNSUPPORTED",
-      "UNSUPPORTED",
+      "GLOBAL_OFF",
       "STOP_LISTENING",
       "TURN_AC_OFF",
       "UNSUPPORTED",
@@ -1384,7 +1722,19 @@
       "UNSUPPORTED",
       "UNSUPPORTED",
       "TURN_AC_ON",
-      "LIGHTS_ON"
+      "LIGHTS_ON",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_ON",
+      "GLOBAL_ON",
+      "GLOBAL_ON",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "LIGHTS_ON",
+      "LIGHTS_ON",
+      "GLOBAL_ON"
     ],
     "true_labels": [
       "LIGHTS_ON",
@@ -1434,96 +1784,52 @@
       "UNSUPPORTED",
       "UNSUPPORTED",
       "UNSUPPORTED",
+      "UNSUPPORTED",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_OFF",
+      "GLOBAL_ON",
+      "GLOBAL_ON",
+      "CLARIFY",
+      "CLARIFY",
+      "CLARIFY",
+      "TURN_AC_ON",
+      "UNSUPPORTED",
       "UNSUPPORTED"
     ]
   },
   "layer_a_svm_train": {
-    "num_samples": 224,
+    "num_samples": 275,
     "accuracy": 1.0,
     "macro_f1": 1.0,
     "weighted_f1": 1.0
   },
   "layer_b_end_to_end_test": {
-    "total_records": 68,
-    "exact_matches": 66,
-    "accuracy": 0.9705882352941176,
-    "single_total": 42,
-    "single_accuracy": 0.9523809523809523,
-    "compound_total": 18,
+    "total_records": 84,
+    "exact_matches": 84,
+    "accuracy": 1.0,
+    "single_total": 53,
+    "single_accuracy": 1.0,
+    "compound_total": 21,
     "compound_accuracy": 1.0,
-    "unsupported_total": 8,
+    "unsupported_total": 10,
     "unsupported_accuracy": 1.0,
-    "num_mismatches": 2,
-    "sample_mismatches": [
-      {
-        "id": "CMD_067",
-        "utterance": "is the air conditioning currently turned on",
-        "expected": [
-          {
-            "type": "GET_AC_STATUS",
-            "parameters": {}
-          }
-        ],
-        "status": "VALID",
-        "predicted": [
-          {
-            "type": "TURN_AC_ON",
-            "parameters": {}
-          }
-        ]
-      },
-      {
-        "id": "CMD_112",
-        "utterance": "is the passenger door shut",
-        "expected": [
-          {
-            "type": "GET_DOOR_STATUS",
-            "parameters": {
-              "door": "passenger"
-            }
-          }
-        ],
-        "status": "VALID",
-        "predicted": [
-          {
-            "type": "CLOSE_DOOR",
-            "parameters": {
-              "door": "passenger"
-            }
-          }
-        ]
-      }
-    ]
+    "num_mismatches": 0,
+    "sample_mismatches": []
   },
   "layer_b_end_to_end_dev": {
-    "total_records": 59,
-    "exact_matches": 55,
-    "accuracy": 0.9322033898305084,
-    "single_total": 40,
+    "total_records": 73,
+    "exact_matches": 64,
+    "accuracy": 0.8767123287671232,
+    "single_total": 50,
     "single_accuracy": 0.9,
-    "compound_total": 11,
-    "compound_accuracy": 1.0,
-    "unsupported_total": 8,
-    "unsupported_accuracy": 1.0,
-    "num_mismatches": 4,
+    "compound_total": 13,
+    "compound_accuracy": 0.8461538461538461,
+    "unsupported_total": 10,
+    "unsupported_accuracy": 0.8,
+    "num_mismatches": 9,
     "sample_mismatches": [
-      {
-        "id": "CMD_061",
-        "utterance": "is the climate control active",
-        "expected": [
-          {
-            "type": "GET_AC_STATUS",
-            "parameters": {}
-          }
-        ],
-        "status": "VALID",
-        "predicted": [
-          {
-            "type": "TURN_AC_OFF",
-            "parameters": {}
-          }
-        ]
-      },
       {
         "id": "CMD_101",
         "utterance": "are both doors closed",
@@ -1546,23 +1852,6 @@
         ]
       },
       {
-        "id": "CMD_102",
-        "utterance": "are the vehicle doors open",
-        "expected": [
-          {
-            "type": "GET_DOOR_STATUS",
-            "parameters": {}
-          }
-        ],
-        "status": "VALID",
-        "predicted": [
-          {
-            "type": "GET_LIGHTS_STATUS",
-            "parameters": {}
-          }
-        ]
-      },
-      {
         "id": "CMD_164",
         "utterance": "deactivate hazard mode",
         "expected": [
@@ -1578,10 +1867,142 @@
             "parameters": {}
           }
         ]
+      },
+      {
+        "id": "CMD_192",
+        "utterance": "shut down the program",
+        "expected": [
+          {
+            "type": "EXIT",
+            "parameters": {}
+          }
+        ],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "GLOBAL_OFF",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_243",
+        "utterance": "open the passenger door and switch on the ac",
+        "expected": [
+          {
+            "type": "OPEN_DOOR",
+            "parameters": {
+              "door": "passenger"
+            }
+          },
+          {
+            "type": "TURN_AC_ON",
+            "parameters": {}
+          }
+        ],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "TURN_AC_ON",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_248",
+        "utterance": "open both doors, turn on the ac, and activate hazard mode",
+        "expected": [
+          {
+            "type": "OPEN_DOOR",
+            "parameters": {
+              "door": "both"
+            }
+          },
+          {
+            "type": "TURN_AC_ON",
+            "parameters": {}
+          },
+          {
+            "type": "EMERGENCY_ON",
+            "parameters": {}
+          }
+        ],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "TURN_AC_ON",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_301",
+        "utterance": "turn on the ac and play jazz",
+        "expected": [],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "TURN_AC_ON",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_328",
+        "utterance": "disable all vehicle systems",
+        "expected": [
+          {
+            "type": "GLOBAL_OFF",
+            "parameters": {}
+          }
+        ],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "GLOBAL_ON",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_352",
+        "utterance": "it is dark outside",
+        "expected": [
+          {
+            "type": "CLARIFY",
+            "parameters": {
+              "target": "headlights"
+            }
+          }
+        ],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "CLARIFY",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "id": "CMD_384",
+        "utterance": "turn on the headlights but keep them off",
+        "expected": [],
+        "status": "VALID",
+        "predicted": [
+          {
+            "type": "LIGHTS_ON",
+            "parameters": {}
+          },
+          {
+            "type": "LIGHTS_OFF",
+            "parameters": {}
+          }
+        ]
       }
     ]
   },
   "classes": [
+    "CLARIFY",
     "CLOSE_DOOR",
     "EMERGENCY_OFF",
     "EMERGENCY_ON",
@@ -1593,6 +2014,8 @@
     "GET_LIGHTS_STATUS",
     "GET_SENSOR_STATUS",
     "GET_TEMPERATURE",
+    "GLOBAL_OFF",
+    "GLOBAL_ON",
     "GREETING",
     "HELP",
     "LIGHTS_OFF",

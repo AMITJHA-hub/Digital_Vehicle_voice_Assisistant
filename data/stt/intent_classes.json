@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "total_classes": 20,
+  "version": "1.1.0",
+  "total_classes": 23,
   "classes": [
     {
       "name": "LIGHTS_ON",
@@ -138,6 +138,29 @@
       "description": "Pause audio listening mode or mute the microphone",
       "hardware_action": null,
       "parameters": {}
+    },
+    {
+      "name": "GLOBAL_OFF",
+      "category": "global",
+      "description": "Switch off all controllable vehicle systems (lights, AC, hazard). Doors and process untouched.",
+      "hardware_action": "set_lights(False), set_ac(False), set_emergency(False)",
+      "parameters": {}
+    },
+    {
+      "name": "GLOBAL_ON",
+      "category": "global",
+      "description": "Safely power on primary vehicle accessories (lights, AC). Doors and hazard kept safe.",
+      "hardware_action": "set_lights(True), set_ac(True)",
+      "parameters": {}
+    },
+    {
+      "name": "CLARIFY",
+      "category": "assistant",
+      "description": "Contextual or indirect reference prompting user clarification without hardware actuation",
+      "hardware_action": null,
+      "parameters": {
+        "target": ["headlights", "ac", "humidity", "comfort"]
+      }
     },
     {
       "name": "UNSUPPORTED",

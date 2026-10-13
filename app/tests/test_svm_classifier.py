@@ -26,10 +26,10 @@ class TestSVMIntentClassifier(unittest.TestCase):
         self.assertTrue(self.classifier.is_svm_active, "SVM classifier should be active.")
         self.assertIsNotNone(self.svm)
         self.assertTrue(self.svm.is_loaded)
-        self.assertEqual(len(self.svm.classes), 20)
+        self.assertEqual(len(self.svm.classes), 23)
 
-    def test_all_twenty_classes_recognized(self):
-        """Verifies that each of the 20 classes can be recognized accurately."""
+    def test_all_classes_recognized(self):
+        """Verifies that all 23 classes can be recognized accurately."""
         class_probes = {
             IntentType.LIGHTS_ON: "turn on the headlights",
             IntentType.LIGHTS_OFF: "turn off the headlights",
@@ -46,6 +46,9 @@ class TestSVMIntentClassifier(unittest.TestCase):
             IntentType.GET_SENSOR_STATUS: "check all the sensors",
             IntentType.EMERGENCY_ON: "emergency hazard on",
             IntentType.EMERGENCY_OFF: "disable emergency mode",
+            IntentType.GLOBAL_OFF: "turn off everything",
+            IntentType.GLOBAL_ON: "turn everything on",
+            IntentType.CLARIFY: "it is too dark in here",
             IntentType.GREETING: "hello assistant",
             IntentType.HELP: "help",
             IntentType.EXIT: "exit",

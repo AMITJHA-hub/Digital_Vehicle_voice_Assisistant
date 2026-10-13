@@ -5,9 +5,10 @@ import re
 from pathlib import Path
 from typing import List, Tuple, Optional, Dict, Any, Pattern
 
-from .models import IntentType, CommandStatus, Action, ParsedCommand
+from .models import IntentType, CommandStatus, Action, ParsedCommand, ActionPlan
 from .normalizer import normalize_text, strip_polite_fillers
 from .svm_pipeline import SVMIntentPipeline
+from .semantic_planner import SemanticPlanner, ContextTracker
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,8 @@ class IntentClassifier:
         self.enable_svm = enable_svm
         self.svm_pipeline: Optional[SVMIntentPipeline] = None
         self.is_svm_active: bool = False
+        self.context_tracker = ContextTracker()
+        self.semantic_planner = SemanticPlanner(self.context_tracker)
 
         if enable_svm:
             try:
@@ -39,6 +42,11 @@ class IntentClassifier:
             except Exception as e:
                 logger.warning(f"Failed to initialize SVM pipeline: {e}. Operating in deterministic fallback mode.")
                 self.is_svm_active = False
+
+    def reset_context(self) -> None:
+        """Resets the conversation context tracker."""
+        self.context_tracker.reset()
+
 
 
     def _build_rules(self) -> List[Tuple[IntentType, List[Pattern]]]:
@@ -135,6 +143,31 @@ class IntentClassifier:
                     r"\b(enable|turn on|switch on|start|activate)?\b.*?\b(emergency|hazard)\b",
                     r"\b(hazard|emergency)\s*on\b",
                     r"^(emergency|hazard)$",
+                ],
+            ),
+            # Global Vehicle Systems Control
+            (
+                IntentType.GLOBAL_OFF,
+                [
+                    r"\b(turn off|switch off|shut down|power down|deactivate)\s+(everything|it all|all systems|all the systems|all controllable systems|all vehicle systems|all the electronics)\b",
+                    r"^(everything off|all systems off)$",
+                ],
+            ),
+            (
+                IntentType.GLOBAL_ON,
+                [
+                    r"\b(turn on|switch on|enable|activate|restore)\s+(everything|all systems|all the systems|all controllable systems)\b",
+                    r"^(everything on|all systems on)$",
+                ],
+            ),
+            # Clarification / Indirect Inquiry
+            (
+                IntentType.CLARIFY,
+                [
+                    r"\b(too dark|cannot see|can\'t see)\b",
+                    r"\b(getting hot|too warm|too hot)\b",
+                    r"\btoo humid\b",
+                    r"\bmake (the )?cabin (more )?comfortable\b",
                 ],
             ),
             # Vehicle Lighting: Status Query
@@ -265,6 +298,16 @@ class IntentClassifier:
         if re.search(r"\b(music|radio|song|spotify|volume|navigate|navigation|route|directions?|window|windows|sunroof|seat|mirror)\b", clause):
             return None
 
+        # Guard against SVM misclassification of direct status questions:
+        # e.g. "is the ac on" must not be predicted as TURN_AC_ON
+        if re.search(r"^(?:is|are|check if)\s+(?:the\s+)?(?:ac|air\s+conditioning)\b.*?\b(?:on|off|active|running)\b", clause):
+            return IntentType.GET_AC_STATUS, {}
+        if re.search(r"^(?:is|are|check if)\s+(?:the\s+)?(?:lights|headlights|lamps)\b.*?\b(?:on|off|active)\b", clause):
+            return IntentType.GET_LIGHTS_STATUS, {}
+        if re.search(r"^(?:is|are|check if)\s+(?:the\s+)?(?:door|doors)\b.*?\b(?:open|closed|shut)\b", clause):
+            entities = self._extract_entities(IntentType.GET_DOOR_STATUS, clause)
+            return IntentType.GET_DOOR_STATUS, entities
+
         # 1. Machine Learning Prediction via Offline SVM
         if self.is_svm_active and self.svm_pipeline:
             try:
@@ -298,6 +341,16 @@ class IntentClassifier:
             return "", False
 
         cleaned = strip_polite_fillers(normalized)
+
+        # Strip sensory preamble before imperative action:
+        # e.g., "it is getting warm please start the ac" -> "start the ac"
+        # "it is too dark turn on the headlights" -> "turn on the headlights"
+        cleaned = re.sub(
+            r"^(?:it\s+is\s+getting\s+warm|it\s+is\s+too\s+dark|it\s+is\s+cold|it\s+is\s+hot)\s+(?:please\s+)?(start|turn|switch|open|close|shut)\b",
+            r"\1",
+            cleaned,
+            flags=re.IGNORECASE,
+        )
 
         # Handle negative contrast: "turn off the ac, not the headlights"
         neg_match = re.search(
@@ -396,15 +449,18 @@ class IntentClassifier:
 
         return self._resolve_pronouns(expanded_clauses)
 
-    def classify(self, text: str) -> ParsedCommand:
+    def classify(self, text: str, context: Optional[ContextTracker] = None) -> ParsedCommand:
         """Classifies an utterance into atomic or compound actions.
 
         Args:
             text: Raw speech-to-text transcript.
+            context: Optional conversation context tracker for elliptical commands.
 
         Returns:
             ParsedCommand instance with ordered actions, status, and metadata.
         """
+        active_context = context or self.context_tracker
+
         normalized = normalize_text(text)
         if not normalized:
             return ParsedCommand(
@@ -415,6 +471,43 @@ class IntentClassifier:
                 confidence=0.0,
                 error_message="Empty speech transcript received.",
             )
+
+        # 0. Deterministic Semantic & Action-Planning Layer
+        sem_plan = self.semantic_planner.plan(text, context=active_context)
+        if sem_plan is not None:
+            if sem_plan.status == CommandStatus.REJECTED:
+                return ParsedCommand(
+                    actions=[],
+                    status=CommandStatus.REJECTED,
+                    raw_text=text,
+                    normalized_text=normalized,
+                    confidence=1.0,
+                    error_message=sem_plan.clarification_prompt,
+                    plan=sem_plan,
+                )
+            elif sem_plan.status == CommandStatus.AMBIGUOUS:
+                return ParsedCommand(
+                    actions=[],
+                    status=CommandStatus.AMBIGUOUS,
+                    raw_text=text,
+                    normalized_text=normalized,
+                    confidence=0.5,
+                    error_message=sem_plan.clarification_prompt,
+                    plan=sem_plan,
+                )
+            else:
+                cmd = ParsedCommand(
+                    actions=sem_plan.actions,
+                    status=CommandStatus.VALID,
+                    raw_text=text,
+                    normalized_text=normalized,
+                    confidence=1.0,
+                    error_message=sem_plan.clarification_prompt,
+                    plan=sem_plan,
+                )
+                if active_context and cmd.actions:
+                    active_context.update(cmd)
+                return cmd
 
         cleaned, was_negated = self._preprocess_utterance(text)
         if not cleaned:
@@ -429,26 +522,34 @@ class IntentClassifier:
         # Conditional door command policy:
         # e.g., "Close both doors if they are open, and don't close them if only one is open."
         if re.search(r"\bclose\s+(?:both\s+)?doors?\s+if\s+(?:they\s+are\s+|both\s+are\s+)?open\b", cleaned):
-            return ParsedCommand(
+            cmd = ParsedCommand(
                 actions=[Action(type=IntentType.CLOSE_DOOR, parameters={"door": "both", "condition": "both_open_only"})],
                 status=CommandStatus.VALID,
                 raw_text=text,
                 normalized_text=normalized,
                 confidence=1.0,
             )
+            cmd.plan = ActionPlan(actions=list(cmd.actions), status=CommandStatus.VALID)
+            if active_context:
+                active_context.update(cmd)
+            return cmd
 
         # Single atomic check: if no compound conjunctions are present and not negated
         if not was_negated and not any(k in cleaned for k in [" and ", " then ", " but ", "before "]):
             atomic_res = self._classify_atomic(cleaned)
             if atomic_res is not None:
                 intent, entities = atomic_res
-                return ParsedCommand(
+                cmd = ParsedCommand(
                     actions=[Action(type=intent, parameters=entities)],
                     status=CommandStatus.VALID,
                     raw_text=text,
                     normalized_text=normalized,
                     confidence=1.0,
                 )
+                cmd.plan = ActionPlan(actions=list(cmd.actions), status=CommandStatus.VALID)
+                if active_context:
+                    active_context.update(cmd)
+                return cmd
 
         # Compound sentence segmentation
         clauses = self._segment_compound(cleaned)
@@ -466,13 +567,17 @@ class IntentClassifier:
                     error_message=f"Unsupported command: '{target_clause}'",
                 )
             intent, entities = res
-            return ParsedCommand(
+            cmd = ParsedCommand(
                 actions=[Action(type=intent, parameters=entities)],
                 status=CommandStatus.VALID,
                 raw_text=text,
                 normalized_text=normalized,
                 confidence=1.0,
             )
+            cmd.plan = ActionPlan(actions=list(cmd.actions), status=CommandStatus.VALID)
+            if active_context:
+                active_context.update(cmd)
+            return cmd
 
         # Multi-clause evaluation (Compound command)
         parsed_actions: List[Action] = []
@@ -501,10 +606,15 @@ class IntentClassifier:
                 )
             parsed_actions.append(Action(type=intent, parameters=entities))
 
-        return ParsedCommand(
+        cmd = ParsedCommand(
             actions=parsed_actions,
             status=CommandStatus.VALID,
             raw_text=text,
             normalized_text=normalized,
             confidence=1.0,
         )
+        cmd.plan = ActionPlan(actions=list(cmd.actions), status=CommandStatus.VALID)
+        if active_context:
+            active_context.update(cmd)
+        return cmd
+

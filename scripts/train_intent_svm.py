@@ -200,6 +200,9 @@ def evaluate_layer_b_end_to_end(
         expected_actions = r.get("expected_actions", [])
         is_supported = r.get("supported", True)
 
+        if hasattr(classifier, "reset_context"):
+            classifier.reset_context()
+
         cmd = classifier.classify(utterance)
 
         # Check action match

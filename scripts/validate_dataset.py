@@ -15,7 +15,12 @@ Checks:
 import json
 import os
 import sys
+from pathlib import Path
 from typing import Dict, Set
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from app.intents.models import IntentType
 
@@ -27,6 +32,7 @@ VALID_CATEGORIES = {
     "sensors",
     "emergency",
     "assistant",
+    "global",
     "compound",
     "unsupported",
 }

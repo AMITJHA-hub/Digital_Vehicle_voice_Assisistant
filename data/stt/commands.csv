@@ -309,3 +309,80 @@ CMD_307,unlock all doors,unlock all doors,[],unsupported,test,medium,False,Unsup
 CMD_308,read my unread emails,read my unread emails,[],unsupported,test,easy,False,Unsupported email reader
 CMD_309,turn off the headlights and play the radio,turn off the headlights and play the radio,[],unsupported,test,hard,False,Safety rejection: mixed supported lights and unsupported radio
 CMD_310,open the door and turn off the ac,open the door and turn off the ac,[],unsupported,test,hard,False,Safety rejection: compound ambiguous door target
+CMD_311,turn off everything,turn off everything,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,easy,True,Canonical global off
+CMD_312,switch everything off,switch everything off,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,easy,True,Synonym verb switch everything off
+CMD_313,shut everything down,shut everything down,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,easy,True,Synonym verb shut down everything
+CMD_314,switch it all off,switch it all off,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,easy,True,Collective pronoun it all off
+CMD_315,turn all the systems off,turn all the systems off,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Collective noun phrase all the systems off
+CMD_316,turn off all the vehicle systems,turn off all the vehicle systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Formal vehicle systems off
+CMD_317,deactivate everything,deactivate everything,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Formal deactivate everything
+CMD_318,switch off all the electronics,switch off all the electronics,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Collective electronics off
+CMD_319,power down all controllable systems,power down all controllable systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Power down controllable systems
+CMD_320,i want everything switched off,i want everything switched off,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Conversational desire everything off
+CMD_321,turn off the electricals,turn off the electricals,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,hard,True,Colloquial electricals off
+CMD_322,shut down the cabin systems,shut down the cabin systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Cabin systems shutdown
+CMD_323,turn off the nonessential stuff,turn off the nonessential stuff,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,hard,True,Colloquial nonessential off
+CMD_324,turn off all the lights and climate controls,turn off all the lights and climate controls,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,train,medium,True,Compound collective lights and climate
+CMD_325,"everything off, please",everything off please,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,dev,easy,True,Polite telegraphic everything off
+CMD_326,can you shut everything down,can you shut everything down,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,dev,medium,True,Polite question everything down
+CMD_327,turn off all controllable systems,turn off all controllable systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,dev,medium,True,Controllable systems off
+CMD_328,disable all vehicle systems,disable all vehicle systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,dev,medium,True,Disable all systems
+CMD_329,everything off,everything off,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,test,easy,True,Telegraphic held-out everything off
+CMD_330,please switch off everything,please switch off everything,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,test,medium,True,Polite prefix held-out switch off everything
+CMD_331,turn off all systems,turn off all systems,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,test,medium,True,All systems off held-out
+CMD_332,shut down everything,shut down everything,"[{""type"": ""GLOBAL_OFF"", ""parameters"": {}}]",global,test,easy,True,Shut down everything held-out
+CMD_333,turn everything on,turn everything on,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,easy,True,Canonical global on
+CMD_334,switch everything on,switch everything on,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,easy,True,Synonym verb switch everything on
+CMD_335,enable everything,enable everything,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,medium,True,Formal enable everything
+CMD_336,turn everything back on,turn everything back on,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,medium,True,Restoration everything back on
+CMD_337,restore all systems,restore all systems,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,medium,True,Restore all systems
+CMD_338,enable all the systems again,enable all the systems again,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,medium,True,Enable all systems again
+CMD_339,activate all vehicle systems,activate all vehicle systems,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,hard,True,Activate vehicle systems
+CMD_340,turn on all controllable systems,turn on all controllable systems,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,train,medium,True,All controllable systems on
+CMD_341,switch all systems on,switch all systems on,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,dev,easy,True,Switch all systems on
+CMD_342,power on all systems,power on all systems,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,dev,medium,True,Power on all systems
+CMD_343,turn on everything,turn on everything,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,test,easy,True,Held-out turn on everything
+CMD_344,everything on,everything on,"[{""type"": ""GLOBAL_ON"", ""parameters"": {}}]",global,test,easy,True,Held-out telegraphic everything on
+CMD_345,it is too dark in here,it is too dark in here,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""headlights""}}]",assistant,train,easy,True,Clarify headlights suggestion
+CMD_346,i cannot see anything,i cannot see anything,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""headlights""}}]",assistant,train,medium,True,Clarify headlights inquiry
+CMD_347,it is getting hot inside,it is getting hot inside,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""ac""}}]",assistant,train,easy,True,Clarify AC suggestion
+CMD_348,the car is getting warm,the car is getting warm,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""ac""}}]",assistant,train,medium,True,Clarify AC temperature prompt
+CMD_349,the cabin is too humid,the cabin is too humid,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""humidity""}}]",assistant,train,easy,True,Clarify humidity sensor query
+CMD_350,it feels too humid in here,it feels too humid in here,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""humidity""}}]",assistant,train,medium,True,Clarify humidity sensory report
+CMD_351,make the cabin more comfortable,make the cabin more comfortable,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""comfort""}}]",assistant,train,hard,True,Clarify comfort multi-option prompt
+CMD_352,it is dark outside,it is dark outside,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""headlights""}}]",assistant,dev,easy,True,Clarify headlights outside dark
+CMD_353,the cabin feels hot,the cabin feels hot,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""ac""}}]",assistant,dev,medium,True,Clarify AC cabin hot
+CMD_354,is it too humid in here,is it too humid in here,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""humidity""}}]",assistant,dev,medium,True,Clarify humidity inquiry question
+CMD_355,the cabin is too dark,the cabin is too dark,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""headlights""}}]",assistant,test,easy,True,Held-out dark in here with contraction
+CMD_356,it is getting really hot inside,it is getting really hot inside,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""ac""}}]",assistant,test,easy,True,Held-out hot inside with contraction
+CMD_357,the car is too warm,the car is too warm,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""ac""}}]",assistant,test,medium,True,Held-out car too warm
+CMD_358,make the cabin comfortable,make the cabin comfortable,"[{""type"": ""CLARIFY"", ""parameters"": {""target"": ""comfort""}}]",assistant,test,hard,True,Held-out comfort clarification
+CMD_359,turn off everything except the headlights,turn off everything except the headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",compound,train,hard,True,Global exclusion of headlights
+CMD_360,leave the lights on and switch everything else off,leave the lights on and switch everything else off,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",compound,train,hard,True,Lights preserved on; everything else off
+CMD_361,"shut off the air conditioning, not the lights",shut off the air conditioning not the lights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Contrastive negation headlights excluded
+CMD_362,turn the lights and ac off,turn the lights and ac off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Collective lights and AC off
+CMD_363,turn on the lights and leave them on,turn on the lights and leave them on,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,medium,True,State preservation leave them on
+CMD_364,switch on the ac and turn it off again,switch on the ac and turn it off again,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,hard,True,Sequential AC on then off
+CMD_365,open the driver door and then close it,open the driver door and then close it,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,train,hard,True,Pronoun it refers to driver door
+CMD_366,turn the ac on and leave everything else alone,turn the ac on and leave everything else alone,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,AC isolated from other systems
+CMD_367,don't touch the doors; turn the lights off,do not touch the doors turn the lights off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,hard,True,Doors excluded; lights off
+CMD_368,close the driver door but leave the passenger door open,close the driver door but leave the passenger door open,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,train,hard,True,Driver door closed; passenger door open
+CMD_369,turn off everything except the ac,turn off everything except the ac,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",compound,dev,hard,True,Dev global exclusion of AC
+CMD_370,"turn on the ac, not the headlights",turn on the ac not the headlights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,dev,medium,True,Dev contrastive AC on
+CMD_371,lights and ac off,lights and ac off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,dev,easy,True,Dev telegraphic lights and AC off
+CMD_372,turn off the ac but not the lights,turn off the ac but not the lights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,test,medium,True,Held-out contrastive AC off lights excluded
+CMD_373,turn on the headlights and ac,turn on the headlights and ac,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,test,easy,True,Held-out headlights and AC on
+CMD_374,turn on the ac and then turn it off,turn on the ac and then turn it off,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,test,hard,True,Held-out sequential AC cycle
+CMD_375,open the driver door and close it,open the driver door and close it,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,test,hard,True,Held-out pronoun door cycle
+CMD_376,turn off the ac but keep it running,turn off the ac but keep it running,[],unsupported,train,hard,False,Contradiction rejection AC off vs running
+CMD_377,turn on the lights and leave them off,turn on the lights and leave them off,[],unsupported,train,hard,False,Contradiction rejection lights on vs off
+CMD_378,switch both of those off,switch both of those off,[],unsupported,train,medium,False,Ambiguity rejection without prior context
+CMD_379,both on,both on,[],unsupported,train,medium,False,Ambiguity rejection without prior context
+CMD_380,now the other one,now the other one,[],unsupported,train,medium,False,Ambiguity rejection without prior context
+CMD_381,the headlights too,the headlights too,[],unsupported,train,medium,False,Ambiguity rejection without prior context
+CMD_382,set cabin temperature to eighteen degrees,set cabin temperature to eighteen degrees,[],unsupported,train,medium,False,Unsupported temperature setting
+CMD_383,dehumidify the vehicle,dehumidify the vehicle,[],unsupported,train,medium,False,Unsupported dehumidifier actuator
+CMD_384,turn on the headlights but keep them off,turn on the headlights but keep them off,[],unsupported,dev,hard,False,Contradiction rejection lights on vs off
+CMD_385,switch the two systems back on,switch the two systems back on,[],unsupported,dev,medium,False,Ambiguity rejection without prior context
+CMD_386,turn the ac off but keep it running,turn the ac off but keep it running,[],unsupported,test,hard,False,Held-out contradiction rejection AC off vs running
+CMD_387,disable both systems,disable both systems,[],unsupported,test,medium,False,Held-out ambiguity rejection without antecedent
