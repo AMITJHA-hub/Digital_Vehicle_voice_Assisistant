@@ -1,0 +1,1864 @@
+{
+  "benchmark": "In-Vehicle Voice Assistant STT & Compound Action Benchmark",
+  "split": "test",
+  "total_samples": 68,
+  "overall_metrics": {
+    "mean_wer_percent": 19.87,
+    "transcript_exact_match_percent": 57.35,
+    "action_exact_match_percent": 70.59,
+    "mean_latency_sec": 1.63
+  },
+  "category_metrics": {
+    "lighting": {
+      "total": 7,
+      "action_match": 4,
+      "action_accuracy_percent": 57.14,
+      "transcript_match": 4,
+      "transcript_accuracy_percent": 57.14,
+      "mean_wer_percent": 23.81
+    },
+    "climate": {
+      "total": 8,
+      "action_match": 4,
+      "action_accuracy_percent": 50.0,
+      "transcript_match": 3,
+      "transcript_accuracy_percent": 37.5,
+      "mean_wer_percent": 27.92
+    },
+    "doors": {
+      "total": 10,
+      "action_match": 9,
+      "action_accuracy_percent": 90.0,
+      "transcript_match": 9,
+      "transcript_accuracy_percent": 90.0,
+      "mean_wer_percent": 2.0
+    },
+    "sensors": {
+      "total": 7,
+      "action_match": 5,
+      "action_accuracy_percent": 71.43,
+      "transcript_match": 5,
+      "transcript_accuracy_percent": 71.43,
+      "mean_wer_percent": 17.62
+    },
+    "emergency": {
+      "total": 3,
+      "action_match": 2,
+      "action_accuracy_percent": 66.67,
+      "transcript_match": 1,
+      "transcript_accuracy_percent": 33.33,
+      "mean_wer_percent": 12.22
+    },
+    "assistant": {
+      "total": 5,
+      "action_match": 2,
+      "action_accuracy_percent": 40.0,
+      "transcript_match": 3,
+      "transcript_accuracy_percent": 60.0,
+      "mean_wer_percent": 80.0
+    },
+    "compound": {
+      "total": 20,
+      "action_match": 14,
+      "action_accuracy_percent": 70.0,
+      "transcript_match": 10,
+      "transcript_accuracy_percent": 50.0,
+      "mean_wer_percent": 8.49
+    },
+    "unsupported": {
+      "total": 8,
+      "action_match": 8,
+      "action_accuracy_percent": 100.0,
+      "transcript_match": 4,
+      "transcript_accuracy_percent": 50.0,
+      "mean_wer_percent": 26.46
+    }
+  },
+  "samples": [
+    {
+      "id": "CMD_030",
+      "category": "lighting",
+      "reference": "turn the headlights on for me",
+      "reference_normalized": "turn the headlights on for me",
+      "transcription_raw": "Turn the headlights on for me.",
+      "transcription_normalized": "turn the headlights on for me",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.342
+    },
+    {
+      "id": "CMD_031",
+      "category": "lighting",
+      "reference": "shut the lights down",
+      "reference_normalized": "shut the lights down",
+      "transcription_raw": "Shut the lights down.",
+      "transcription_normalized": "shut the lights down",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.176
+    },
+    {
+      "id": "CMD_032",
+      "category": "lighting",
+      "reference": "are my headlights currently turned on",
+      "reference_normalized": "are my headlights currently turned on",
+      "transcription_raw": "I'd like to currently turn on.",
+      "transcription_normalized": "i would like to currently turn on",
+      "wer": 0.8333,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "GET_LIGHTS_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.261
+    },
+    {
+      "id": "CMD_033",
+      "category": "lighting",
+      "reference": "headlight status please",
+      "reference_normalized": "headlight status please",
+      "transcription_raw": "Headlight status please.",
+      "transcription_normalized": "headlight status please",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_LIGHTS_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_LIGHTS_STATUS",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.19
+    },
+    {
+      "id": "CMD_034",
+      "category": "lighting",
+      "reference": "leave the headlights running",
+      "reference_normalized": "leave the headlights running",
+      "transcription_raw": "Leave the headlight struggling.",
+      "transcription_normalized": "leave the headlight struggling",
+      "wer": 0.5,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.231
+    },
+    {
+      "id": "CMD_035",
+      "category": "lighting",
+      "reference": "make sure the lights stay off",
+      "reference_normalized": "make sure the lights stay off",
+      "transcription_raw": "Make sure that I stay off.",
+      "transcription_normalized": "make sure that i stay off",
+      "wer": 0.3333,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.23
+    },
+    {
+      "id": "CMD_036",
+      "category": "lighting",
+      "reference": "switch off the exterior lights",
+      "reference_normalized": "switch off the exterior lights",
+      "transcription_raw": "Switch off the exterior lights.",
+      "transcription_normalized": "switch off the exterior lights",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.15
+    },
+    {
+      "id": "CMD_065",
+      "category": "climate",
+      "reference": "turn the ac on right now",
+      "reference_normalized": "turn the ac on right now",
+      "transcription_raw": "Turn the AC on right now.",
+      "transcription_normalized": "turn the ac on right now",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.303
+    },
+    {
+      "id": "CMD_066",
+      "category": "climate",
+      "reference": "shut down the air conditioning",
+      "reference_normalized": "shut down the air conditioning",
+      "transcription_raw": "",
+      "transcription_normalized": "",
+      "wer": 1.0,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "EMPTY",
+      "latency_sec": 1.431
+    },
+    {
+      "id": "CMD_067",
+      "category": "climate",
+      "reference": "is the air conditioning currently turned on",
+      "reference_normalized": "is the air conditioning currently turned on",
+      "transcription_raw": "is the air conditioning currently turned on.",
+      "transcription_normalized": "is the air conditioning currently turned on",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_AC_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_AC_STATUS",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.373
+    },
+    {
+      "id": "CMD_068",
+      "category": "climate",
+      "reference": "it is getting warm please start the ac",
+      "reference_normalized": "it is getting warm please start the ac",
+      "transcription_raw": "in getting one, please start the ID.",
+      "transcription_normalized": "in getting one please start the id",
+      "wer": 0.5,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.553
+    },
+    {
+      "id": "CMD_069",
+      "category": "climate",
+      "reference": "leave the air conditioning switched off",
+      "reference_normalized": "leave the air conditioning switched off",
+      "transcription_raw": "Leave the air conditioning switch off.",
+      "transcription_normalized": "leave the air conditioning switch off",
+      "wer": 0.1667,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.457
+    },
+    {
+      "id": "CMD_070",
+      "category": "climate",
+      "reference": "check if the ac is running",
+      "reference_normalized": "check if the ac is running",
+      "transcription_raw": "Check if the icey is running.",
+      "transcription_normalized": "check if the icey is running",
+      "wer": 0.1667,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "GET_AC_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.452
+    },
+    {
+      "id": "CMD_071",
+      "category": "climate",
+      "reference": "power off the cooling unit",
+      "reference_normalized": "power off the cooling unit",
+      "transcription_raw": "Power off the cooling unit.",
+      "transcription_normalized": "power off the cooling unit",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.498
+    },
+    {
+      "id": "CMD_072",
+      "category": "climate",
+      "reference": "activate cabin air conditioning please",
+      "reference_normalized": "activate cabin air conditioning please",
+      "transcription_raw": "Activate cabinet conditioning please.",
+      "transcription_normalized": "activate cabinet conditioning please",
+      "wer": 0.4,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.407
+    },
+    {
+      "id": "CMD_105",
+      "category": "doors",
+      "reference": "open the left side door",
+      "reference_normalized": "open the left side door",
+      "transcription_raw": "open the left side door.",
+      "transcription_normalized": "open the left side door",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.396
+    },
+    {
+      "id": "CMD_106",
+      "category": "doors",
+      "reference": "shut the left side door",
+      "reference_normalized": "shut the left side door",
+      "transcription_raw": "Shut the left side door.",
+      "transcription_normalized": "shut the left side door",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.465
+    },
+    {
+      "id": "CMD_107",
+      "category": "doors",
+      "reference": "open the right side door",
+      "reference_normalized": "open the right side door",
+      "transcription_raw": "Open the right side door.",
+      "transcription_normalized": "open the right side door",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.521
+    },
+    {
+      "id": "CMD_108",
+      "category": "doors",
+      "reference": "shut the right side door",
+      "reference_normalized": "shut the right side door",
+      "transcription_raw": "Shut the right side door.",
+      "transcription_normalized": "shut the right side door",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.533
+    },
+    {
+      "id": "CMD_109",
+      "category": "doors",
+      "reference": "can you open both vehicle doors",
+      "reference_normalized": "can you open both vehicle doors",
+      "transcription_raw": "Can you open both vehicle doors?",
+      "transcription_normalized": "can you open both vehicle doors",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.506
+    },
+    {
+      "id": "CMD_110",
+      "category": "doors",
+      "reference": "close both vehicle doors please",
+      "reference_normalized": "close both vehicle doors please",
+      "transcription_raw": "Close those vehicle doors, please.",
+      "transcription_normalized": "close those vehicle doors please",
+      "wer": 0.2,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.543
+    },
+    {
+      "id": "CMD_111",
+      "category": "doors",
+      "reference": "check if the driver door is open",
+      "reference_normalized": "check if the driver door is open",
+      "transcription_raw": "Check if the driver door is open.",
+      "transcription_normalized": "check if the driver door is open",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_DOOR_STATUS",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_DOOR_STATUS",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.495
+    },
+    {
+      "id": "CMD_112",
+      "category": "doors",
+      "reference": "is the passenger door shut",
+      "reference_normalized": "is the passenger door shut",
+      "transcription_raw": "is the passenger door shut.",
+      "transcription_normalized": "is the passenger door shut",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_DOOR_STATUS",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_DOOR_STATUS",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.502
+    },
+    {
+      "id": "CMD_113",
+      "category": "doors",
+      "reference": "open the door, please",
+      "reference_normalized": "open the door please",
+      "transcription_raw": "Open the door, please.",
+      "transcription_normalized": "open the door please",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.756
+    },
+    {
+      "id": "CMD_114",
+      "category": "doors",
+      "reference": "shut the door please",
+      "reference_normalized": "shut the door please",
+      "transcription_raw": "Shut the door, please.",
+      "transcription_normalized": "shut the door please",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.487
+    },
+    {
+      "id": "CMD_144",
+      "category": "sensors",
+      "reference": "tell me the current cabin temperature",
+      "reference_normalized": "tell me the current cabin temperature",
+      "transcription_raw": "Tell me the current cabin temperature.",
+      "transcription_normalized": "tell me the current cabin temperature",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.632
+    },
+    {
+      "id": "CMD_145",
+      "category": "sensors",
+      "reference": "how hot is the car right now",
+      "reference_normalized": "how hot is the car right now",
+      "transcription_raw": "How hot is the car right now?",
+      "transcription_normalized": "how hot is the car right now",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.611
+    },
+    {
+      "id": "CMD_146",
+      "category": "sensors",
+      "reference": "what is the current humidity percentage",
+      "reference_normalized": "what is the current humidity percentage",
+      "transcription_raw": "What is the current humidity percentage?",
+      "transcription_normalized": "what is the current humidity percentage",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_HUMIDITY",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_HUMIDITY",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.569
+    },
+    {
+      "id": "CMD_147",
+      "category": "sensors",
+      "reference": "check the moisture sensor please",
+      "reference_normalized": "check the moisture sensor please",
+      "transcription_raw": "Check the moisture sensor, please.",
+      "transcription_normalized": "check the moisture sensor please",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_HUMIDITY",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_HUMIDITY",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.589
+    },
+    {
+      "id": "CMD_148",
+      "category": "sensors",
+      "reference": "how far is the nearest obstacle",
+      "reference_normalized": "how far is the nearest obstacle",
+      "transcription_raw": "How far is Naniya risk-toms to kill?",
+      "transcription_normalized": "how far is naniya risk toms to kill",
+      "wer": 0.8333,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "GET_DISTANCE",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.76
+    },
+    {
+      "id": "CMD_149",
+      "category": "sensors",
+      "reference": "distance to front obstacle",
+      "reference_normalized": "distance to front obstacle",
+      "transcription_raw": "distance to front obstacle.",
+      "transcription_normalized": "distance to front obstacle",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GET_DISTANCE",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GET_DISTANCE",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.606
+    },
+    {
+      "id": "CMD_150",
+      "category": "sensors",
+      "reference": "give me full sensor diagnostics",
+      "reference_normalized": "give me full sensor diagnostics",
+      "transcription_raw": "Give me full sense of diagnostics.",
+      "transcription_normalized": "give me full sense of diagnostics",
+      "wer": 0.4,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "GET_SENSOR_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.623
+    },
+    {
+      "id": "CMD_166",
+      "category": "emergency",
+      "reference": "switch on emergency hazard mode",
+      "reference_normalized": "switch on emergency hazard mode",
+      "transcription_raw": "Which on emergency hazard mode?",
+      "transcription_normalized": "which on emergency hazard mode",
+      "wer": 0.2,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "EMERGENCY_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "EMERGENCY_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.997
+    },
+    {
+      "id": "CMD_167",
+      "category": "emergency",
+      "reference": "please enable the hazard lights immediately",
+      "reference_normalized": "please enable the hazard lights immediately",
+      "transcription_raw": "Please enable the hammered lights immediately.",
+      "transcription_normalized": "please enable the hammered lights immediately",
+      "wer": 0.1667,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "EMERGENCY_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.702
+    },
+    {
+      "id": "CMD_168",
+      "category": "emergency",
+      "reference": "disable the hazard warning system",
+      "reference_normalized": "disable the hazard warning system",
+      "transcription_raw": "disable the hazard warning system.",
+      "transcription_normalized": "disable the hazard warning system",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "EMERGENCY_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "EMERGENCY_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.592
+    },
+    {
+      "id": "CMD_194",
+      "category": "assistant",
+      "reference": "good afternoon",
+      "reference_normalized": "good afternoon",
+      "transcription_raw": "Good afternoon.",
+      "transcription_normalized": "good afternoon",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "GREETING",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "GREETING",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.538
+    },
+    {
+      "id": "CMD_195",
+      "category": "assistant",
+      "reference": "hello assistant",
+      "reference_normalized": "hello assistant",
+      "transcription_raw": "Hello, Assistant.",
+      "transcription_normalized": "hello assistant",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "GREETING",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.492
+    },
+    {
+      "id": "CMD_196",
+      "category": "assistant",
+      "reference": "show me available options",
+      "reference_normalized": "show me available options",
+      "transcription_raw": "Show me available options.",
+      "transcription_normalized": "show me available options",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "HELP",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "HELP",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.527
+    },
+    {
+      "id": "CMD_197",
+      "category": "assistant",
+      "reference": "terminate assistant",
+      "reference_normalized": "terminate assistant",
+      "transcription_raw": "To eliminate us, isn't it?",
+      "transcription_normalized": "to eliminate us is not it",
+      "wer": 3.0,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "EXIT",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.616
+    },
+    {
+      "id": "CMD_198",
+      "category": "assistant",
+      "reference": "pause voice assistant",
+      "reference_normalized": "pause voice assistant",
+      "transcription_raw": "Poor boy-sassist.",
+      "transcription_normalized": "poor boy sassist",
+      "wer": 1.0,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "STOP_LISTENING",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.845
+    },
+    {
+      "id": "CMD_251",
+      "category": "compound",
+      "reference": "power on the headlights and start the air conditioning",
+      "reference_normalized": "power on the headlights and start the air conditioning",
+      "transcription_raw": "Power on the headlights and start the air conditioning.",
+      "transcription_normalized": "power on the headlights and start the air conditioning",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.84
+    },
+    {
+      "id": "CMD_252",
+      "category": "compound",
+      "reference": "shut off the air conditioning and deactivate headlights",
+      "reference_normalized": "shut off the air conditioning and deactivate headlights",
+      "transcription_raw": "shut off the air conditioning and the activate headlights.",
+      "transcription_normalized": "shut off the air conditioning and the activate headlights",
+      "wer": 0.25,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.751
+    },
+    {
+      "id": "CMD_253",
+      "category": "compound",
+      "reference": "open the passenger door and turn on the headlights",
+      "reference_normalized": "open the passenger door and turn on the headlights",
+      "transcription_raw": "open the passenger door and turn on the headlights.",
+      "transcription_normalized": "open the passenger door and turn on the headlights",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.823
+    },
+    {
+      "id": "CMD_254",
+      "category": "compound",
+      "reference": "close the driver door and turn off the lights",
+      "reference_normalized": "close the driver door and turn off the lights",
+      "transcription_raw": "Close the driver door and turn off the lights.",
+      "transcription_normalized": "close the driver door and turn off the lights",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        },
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        },
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.752
+    },
+    {
+      "id": "CMD_255",
+      "category": "compound",
+      "reference": "open both doors, then close both doors",
+      "reference_normalized": "open both doors then close both doors",
+      "transcription_raw": "Open both doors, and close both doors.",
+      "transcription_normalized": "open both doors and close both doors",
+      "wer": 0.1429,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.742
+    },
+    {
+      "id": "CMD_256",
+      "category": "compound",
+      "reference": "before opening the driver door, turn off the ac",
+      "reference_normalized": "before opening the driver door turn off the ac",
+      "transcription_raw": "before opening the driver door, turn off the AC.",
+      "transcription_normalized": "before opening the driver door turn off the ac",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.798
+    },
+    {
+      "id": "CMD_257",
+      "category": "compound",
+      "reference": "before closing the passenger door, turn on the lights",
+      "reference_normalized": "before closing the passenger door turn on the lights",
+      "transcription_raw": "before closing the passenger door turned on the lights.",
+      "transcription_normalized": "before closing the passenger door turned on the lights",
+      "wer": 0.1111,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.764
+    },
+    {
+      "id": "CMD_258",
+      "category": "compound",
+      "reference": "turn on the air conditioner, then turn it off",
+      "reference_normalized": "turn on the air conditioner then turn it off",
+      "transcription_raw": "turn on the air conditioner and turn it off",
+      "transcription_normalized": "turn on the air conditioner and turn it off",
+      "wer": 0.1111,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.919
+    },
+    {
+      "id": "CMD_259",
+      "category": "compound",
+      "reference": "leave the ac off but turn on the headlights",
+      "reference_normalized": "leave the ac off but turn on the headlights",
+      "transcription_raw": "leave the AC off but turn on the headlights.",
+      "transcription_normalized": "leave the ac off but turn on the headlights",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.823
+    },
+    {
+      "id": "CMD_260",
+      "category": "compound",
+      "reference": "keep the headlights on and close both doors",
+      "reference_normalized": "keep the headlights on and close both doors",
+      "transcription_raw": "Keep the headlights on and close those doors.",
+      "transcription_normalized": "keep the headlights on and close those doors",
+      "wer": 0.125,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.873
+    },
+    {
+      "id": "CMD_261",
+      "category": "compound",
+      "reference": "turn off the headlights, switch off the ac, and close both doors",
+      "reference_normalized": "turn off the headlights switch off the ac and close both doors",
+      "transcription_raw": "turn off the headlights, switch off the AC and close both doors.",
+      "transcription_normalized": "turn off the headlights switch off the ac and close both doors",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        },
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.973
+    },
+    {
+      "id": "CMD_262",
+      "category": "compound",
+      "reference": "turn on the ac, open both doors, and turn on the headlights",
+      "reference_normalized": "turn on the ac open both doors and turn on the headlights",
+      "transcription_raw": "Turn on the AC, open both doors, and turn on the headlights.",
+      "transcription_normalized": "turn on the ac open both doors and turn on the headlights",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 2.582
+    },
+    {
+      "id": "CMD_263",
+      "category": "compound",
+      "reference": "turn off the ac, not the lights",
+      "reference_normalized": "turn off the ac not the lights",
+      "transcription_raw": "Turn off the AC, not in the lives.",
+      "transcription_normalized": "turn off the ac not in the lives",
+      "wer": 0.2857,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.799
+    },
+    {
+      "id": "CMD_264",
+      "category": "compound",
+      "reference": "open the passenger door, not the driver door",
+      "reference_normalized": "open the passenger door not the driver door",
+      "transcription_raw": "Open the pass into door, not the driver door.",
+      "transcription_normalized": "open the pass into door not the driver door",
+      "wer": 0.25,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "unspecified"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.817
+    },
+    {
+      "id": "CMD_265",
+      "category": "compound",
+      "reference": "turn on the headlights and check the cabin temperature",
+      "reference_normalized": "turn on the headlights and check the cabin temperature",
+      "transcription_raw": "turn on the headlights and check the cabin temperature.",
+      "transcription_normalized": "turn on the headlights and check the cabin temperature",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        },
+        {
+          "type": "GET_TEMPERATURE",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.773
+    },
+    {
+      "id": "CMD_266",
+      "category": "compound",
+      "reference": "close both doors and give me the sensor status",
+      "reference_normalized": "close both doors and give me the sensor status",
+      "transcription_raw": "Close those doors and give me the census status.",
+      "transcription_normalized": "close those doors and give me the census status",
+      "wer": 0.2222,
+      "transcript_match": false,
+      "action_match": false,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        },
+        {
+          "type": "GET_SENSOR_STATUS",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.872
+    },
+    {
+      "id": "CMD_267",
+      "category": "compound",
+      "reference": "enable hazard mode and open both doors",
+      "reference_normalized": "enable hazard mode and open both doors",
+      "transcription_raw": "enable hazard mode and open both doors.",
+      "transcription_normalized": "enable hazard mode and open both doors",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "EMERGENCY_ON",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "EMERGENCY_ON",
+          "parameters": {}
+        },
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "both"
+          }
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.728
+    },
+    {
+      "id": "CMD_268",
+      "category": "compound",
+      "reference": "turn on the ac and turn on the headlights, please",
+      "reference_normalized": "turn on the ac and turn on the headlights please",
+      "transcription_raw": "Turn on the AC and turn on the headlights, please.",
+      "transcription_normalized": "turn on the ac and turn on the headlights please",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "TURN_AC_ON",
+          "parameters": {}
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.855
+    },
+    {
+      "id": "CMD_269",
+      "category": "compound",
+      "reference": "close the driver door first, then turn on the headlights",
+      "reference_normalized": "close the driver door first then turn on the headlights",
+      "transcription_raw": "Close the driver door first, and turn on the headlights.",
+      "transcription_normalized": "close the driver door first and turn on the headlights",
+      "wer": 0.1,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "CLOSE_DOOR",
+          "parameters": {
+            "door": "driver"
+          }
+        },
+        {
+          "type": "LIGHTS_ON",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.902
+    },
+    {
+      "id": "CMD_270",
+      "category": "compound",
+      "reference": "open the passenger door first, then turn off the ac",
+      "reference_normalized": "open the passenger door first then turn off the ac",
+      "transcription_raw": "open the passenger door first and turn off the AC.",
+      "transcription_normalized": "open the passenger door first and turn off the ac",
+      "wer": 0.1,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "predicted_actions": [
+        {
+          "type": "OPEN_DOOR",
+          "parameters": {
+            "door": "passenger"
+          }
+        },
+        {
+          "type": "TURN_AC_OFF",
+          "parameters": {}
+        }
+      ],
+      "status": "VALID",
+      "latency_sec": 1.804
+    },
+    {
+      "id": "CMD_303",
+      "category": "unsupported",
+      "reference": "play songs by the beatles",
+      "reference_normalized": "play songs by the beatles",
+      "transcription_raw": "Play songs by the Beatles.",
+      "transcription_normalized": "play songs by the beatles",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.678
+    },
+    {
+      "id": "CMD_304",
+      "category": "unsupported",
+      "reference": "navigate to airport",
+      "reference_normalized": "navigate to airport",
+      "transcription_raw": "navigate to airport.",
+      "transcription_normalized": "navigate to airport",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.641
+    },
+    {
+      "id": "CMD_305",
+      "category": "unsupported",
+      "reference": "roll down passenger window",
+      "reference_normalized": "roll down passenger window",
+      "transcription_raw": "roll down pass into window.",
+      "transcription_normalized": "roll down pass into window",
+      "wer": 0.5,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.694
+    },
+    {
+      "id": "CMD_306",
+      "category": "unsupported",
+      "reference": "increase temperature by two degrees",
+      "reference_normalized": "increase temperature by two degrees",
+      "transcription_raw": "increased temperature by two degrees.",
+      "transcription_normalized": "increased temperature by two degrees",
+      "wer": 0.2,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.644
+    },
+    {
+      "id": "CMD_307",
+      "category": "unsupported",
+      "reference": "unlock all doors",
+      "reference_normalized": "unlock all doors",
+      "transcription_raw": "and lock all doors.",
+      "transcription_normalized": "and lock all doors",
+      "wer": 0.6667,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.603
+    },
+    {
+      "id": "CMD_308",
+      "category": "unsupported",
+      "reference": "read my unread emails",
+      "reference_normalized": "read my unread emails",
+      "transcription_raw": "read my own read email.",
+      "transcription_normalized": "read my own read email",
+      "wer": 0.75,
+      "transcript_match": false,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "UNSUPPORTED",
+      "latency_sec": 1.635
+    },
+    {
+      "id": "CMD_309",
+      "category": "unsupported",
+      "reference": "turn off the headlights and play the radio",
+      "reference_normalized": "turn off the headlights and play the radio",
+      "transcription_raw": "turn off the headlights and play the radio.",
+      "transcription_normalized": "turn off the headlights and play the radio",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.852
+    },
+    {
+      "id": "CMD_310",
+      "category": "unsupported",
+      "reference": "open the door and turn off the ac",
+      "reference_normalized": "open the door and turn off the ac",
+      "transcription_raw": "open the door and turn off the AC.",
+      "transcription_normalized": "open the door and turn off the ac",
+      "wer": 0.0,
+      "transcript_match": true,
+      "action_match": true,
+      "expected_actions": [],
+      "predicted_actions": [],
+      "status": "REJECTED",
+      "latency_sec": 1.924
+    }
+  ]
+}

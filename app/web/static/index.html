@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vehicle AI Digital Cockpit & Voice Assistant</title>
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: #0f172a;
+      --card-border: #1e293b;
+      --card-hover: #1e293b;
+      --accent-blue: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-yellow: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 16px 12px 32px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 4px 0;
+    }
+    .header h1 {
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .header .sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-online { background: rgba(34, 197, 94, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .badge-mode { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-subtitle {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      text-transform: none;
+      margin-left: auto;
+    }
+
+    /* =========================================================================
+       1. TOP: SPEECH HEARING INTERFACE
+       ========================================================================= */
+    .speech-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .mic-btn-wrapper {
+      position: relative;
+      margin: 8px 0;
+    }
+    .mic-btn {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border: 4px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mic-btn:active, .mic-btn.recording {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.85);
+      transform: scale(1.04);
+      animation: micPulse 1.2s infinite;
+    }
+    @keyframes micPulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .mic-status-label {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+    }
+    .mic-sub-status {
+      font-size: 0.78rem;
+      color: var(--accent-blue);
+      margin-top: 3px;
+      height: 18px;
+      text-align: center;
+    }
+
+    /* Live Waveform Indicator */
+    .waveform-bars {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      height: 16px;
+      margin-top: 4px;
+    }
+    .bar {
+      width: 3px;
+      height: 4px;
+      background: var(--text-muted);
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+    .recording .bar {
+      background: var(--accent-red);
+      animation: wave 0.8s infinite ease-in-out alternate;
+    }
+    .bar:nth-child(1) { animation-delay: 0.1s; }
+    .bar:nth-child(2) { animation-delay: 0.2s; }
+    .bar:nth-child(3) { animation-delay: 0.3s; }
+    .bar:nth-child(4) { animation-delay: 0.4s; }
+    .bar:nth-child(5) { animation-delay: 0.5s; }
+    .bar:nth-child(6) { animation-delay: 0.6s; }
+    @keyframes wave { 0% { height: 4px; } 100% { height: 16px; } }
+
+    /* Type a command bar */
+    .type-cmd-bar {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+      margin-top: 12px;
+    }
+    .type-cmd-input {
+      flex: 1;
+      background: #090e1a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 0.82rem;
+      outline: none;
+    }
+    .type-cmd-input:focus {
+      border-color: var(--accent-blue);
+    }
+    .type-cmd-btn {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0 14px;
+      cursor: pointer;
+    }
+
+    /* Fallback upload button */
+    .fallback-box {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .fallback-box input[type="file"] { display: none; }
+    .fallback-btn {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    /* Response Terminal Card */
+    .terminal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .terminal-row {
+      margin-bottom: 8px;
+    }
+    .terminal-row:last-child {
+      margin-bottom: 0;
+    }
+    .term-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .term-val {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .val-transcript {
+      color: var(--accent-blue);
+      font-style: italic;
+    }
+    .val-intent {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .val-response {
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+    audio {
+      width: 100%;
+      height: 28px;
+      margin-top: 6px;
+      border-radius: 6px;
+    }
+
+    /* =========================================================================
+       2. MIDDLE: ALL THE POSSIBLE COMMANDS DIRECTORY
+       ========================================================================= */
+    .commands-directory {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: var(--text-muted);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--accent-blue);
+      color: #090e1a;
+      border-color: var(--accent-blue);
+      font-weight: 700;
+    }
+
+    .commands-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .cmd-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #090e1a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cmd-item:hover, .cmd-item:active {
+      border-color: var(--accent-blue);
+      background: #131d35;
+      transform: translateX(2px);
+    }
+    .cmd-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cmd-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .cmd-cat {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .cmd-run-btn {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent-blue);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* =========================================================================
+       3. AT LAST: ALL THE CONTROL BUTTONS & LIVE TELEMETRY
+       ========================================================================= */
+    .controls-directory {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    /* Telemetry Mini Grid */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .telem-card {
+      background: #090e1a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .telem-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+    }
+    .telem-val {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .indicator-light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+      background: #334155;
+      box-shadow: inset 0 0 3px #000;
+    }
+    .light-white.active { background: #ffffff; box-shadow: 0 0 10px #ffffff; }
+    .light-green.active { background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green); animation: blinkGreen 0.7s infinite; }
+    .light-red.active-solid { background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red); }
+    .light-yellow.active-solid { background: var(--accent-yellow); box-shadow: 0 0 10px var(--accent-yellow); }
+    .light-yellow.active-blink { background: var(--accent-yellow); box-shadow: 0 0 10px var(--accent-yellow); animation: blinkYellow 0.3s infinite; }
+
+    @keyframes blinkGreen { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes blinkYellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes blinkHazard { 0%, 100% { opacity: 1; transform: scale(1.01); } 50% { opacity: 0.5; transform: scale(1.0); } }
+
+    /* Interactive Buttons Grid */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .ctrl-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 8px;
+      color: var(--text-main);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ctrl-btn:active {
+      transform: scale(0.97);
+    }
+    .btn-light-on { border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.08); }
+    .btn-light-off { border-color: #334155; color: var(--text-muted); }
+    .btn-ac-on { border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1); color: var(--accent-green); }
+    .btn-ac-off { border-color: #334155; color: var(--text-muted); }
+    .btn-door-open { border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1); color: var(--accent-blue); }
+    .btn-door-close { border-color: #334155; color: var(--text-muted); }
+
+    .hazard-btn-bar {
+      grid-column: span 2;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: var(--accent-red);
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .hazard-btn-bar.active {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: var(--accent-red);
+      animation: blinkHazard 0.6s infinite;
+    }
+
+    .refresh-sensors-btn {
+      grid-column: span 2;
+      background: #131b2e;
+      border: 1px solid #334155;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>🚗 Vehicle Cockpit</h1>
+      <div class="sub">Raspberry Pi 5 &bull; Real-Time whisper.cpp & lgpio</div>
+      <div class="badges">
+        <span class="badge badge-online">● Online</span>
+        <span class="badge badge-mode" id="hwModeBadge">Mode: PHYSICAL</span>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         1. TOP: SPEECH HEARING INTERFACE
+         ===================================================================== -->
+    <div class="section-title">
+      <span>🎙️ 1. Speech Hearing & Terminal</span>
+      <span class="section-subtitle">Live In-Browser Voice</span>
+    </div>
+
+    <div class="speech-box">
+      <div class="mic-btn-wrapper">
+        <button class="mic-btn" id="micBtn" title="Tap to Speak Live">🎙️</button>
+      </div>
+      <div class="mic-status-label" id="micLabel">Tap to Speak Live</div>
+      <div class="mic-sub-status" id="statusText">Ready for voice command</div>
+
+      <div class="waveform-bars" id="waveform">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <!-- Quick Text Command Bar -->
+      <div class="type-cmd-bar">
+        <input type="text" class="type-cmd-input" id="cmdInput" placeholder='Type command e.g. "turn off ac and headlights"'>
+        <button class="type-cmd-btn" id="sendCmdBtn">Run</button>
+      </div>
+
+      <!-- Native sound recorder upload fallback -->
+      <div class="fallback-box">
+        <label class="fallback-btn" for="audioUpload">📁 Use Phone Sound Recorder</label>
+        <input type="file" id="audioUpload" accept="audio/*" capture="microphone">
+      </div>
+    </div>
+
+    <!-- Speech Hearing Terminal -->
+    <div class="terminal-card">
+      <div class="terminal-row">
+        <div class="term-label">You Said (whisper.cpp):</div>
+        <div class="term-val val-transcript" id="transcriptText">"Speak a command above or tap any command below"</div>
+      </div>
+      <div class="terminal-row">
+        <div class="term-label">Recognized Intent & Actions:</div>
+        <div class="term-val" id="intentBadges"><span class="val-intent">STANDBY</span></div>
+      </div>
+      <div class="terminal-row">
+        <div class="term-label">Vehicle Spoken Response:</div>
+        <div class="term-val val-response" id="responseText">Waiting for voice input...</div>
+      </div>
+      <audio id="audioPlayer" controls style="display:none;"></audio>
+    </div>
+
+    <!-- =====================================================================
+         2. THEN: ALL THE POSSIBLE COMMANDS
+         ===================================================================== -->
+    <div class="section-title">
+      <span>📋 2. All Possible Voice Commands</span>
+      <span class="section-subtitle">Tap any to run</span>
+    </div>
+
+    <div class="commands-directory">
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-cat="all">⭐ All</button>
+        <button class="tab-btn" data-cat="compound">🔀 Compound</button>
+        <button class="tab-btn" data-cat="lighting">💡 Lighting</button>
+        <button class="tab-btn" data-cat="climate">❄️ AC Climate</button>
+        <button class="tab-btn" data-cat="doors">🚪 Doors</button>
+        <button class="tab-btn" data-cat="sensors">📡 Sensors</button>
+        <button class="tab-btn" data-cat="emergency">🚨 Hazard</button>
+        <button class="tab-btn" data-cat="assistant">ℹ️ Assistant</button>
+      </div>
+
+      <!-- Commands List -->
+      <div class="commands-list" id="commandsList">
+        <!-- Populated dynamically by JavaScript -->
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         3. AT LAST: ALL THE CONTROLS BUTTONS & LIVE TELEMETRY
+         ===================================================================== -->
+    <div class="section-title">
+      <span>🎛️ 3. Vehicle Manual Controls</span>
+      <span class="section-subtitle">Direct Hardware Toggles</span>
+    </div>
+
+    <div class="controls-directory">
+      <!-- Live Telemetry Grid -->
+      <div class="telemetry-grid">
+        <div class="telem-card">
+          <div class="telem-label">Headlights (White)</div>
+          <div class="telem-val"><span id="lightDot" class="indicator-light light-white"></span><span id="lightState">OFF</span></div>
+        </div>
+        <div class="telem-card">
+          <div class="telem-label">AC Climate (Green)</div>
+          <div class="telem-val"><span id="acDot" class="indicator-light light-green"></span><span id="acState">OFF</span></div>
+        </div>
+        <div class="telem-card">
+          <div class="telem-label">IR Sensor (Red)</div>
+          <div class="telem-val"><span id="irDot" class="indicator-light light-red"></span><span id="irState">CLEAR</span></div>
+        </div>
+        <div class="telem-card">
+          <div class="telem-label">Ultrasonic (Yellow)</div>
+          <div class="telem-val"><span id="ultraDot" class="indicator-light light-yellow"></span><span id="distVal">-- cm</span></div>
+        </div>
+        <div class="telem-card">
+          <div class="telem-label">Left Door (Driver Servo)</div>
+          <div class="telem-val" id="leftDoorVal" style="font-size:0.82rem; color:#94a3b8;">🔒 CLOSED</div>
+        </div>
+        <div class="telem-card">
+          <div class="telem-label">Right Door (Pass Servo)</div>
+          <div class="telem-val" id="rightDoorVal" style="font-size:0.82rem; color:#94a3b8;">🔒 CLOSED</div>
+        </div>
+        <div class="telem-card" style="grid-column: span 2;">
+          <div class="telem-label">Cabin Climate (DHT22)</div>
+          <div class="telem-val" id="climateVal">-- °C | --%</div>
+        </div>
+      </div>
+
+      <!-- Controls Buttons Grid -->
+      <div class="controls-grid">
+        <!-- Headlights -->
+        <button class="ctrl-btn btn-light-on" onclick="sendControl('lights', true)">💡 Headlights ON</button>
+        <button class="ctrl-btn btn-light-off" onclick="sendControl('lights', false)">💡 Headlights OFF</button>
+
+        <!-- AC Climate -->
+        <button class="ctrl-btn btn-ac-on" onclick="sendControl('ac', true)">❄️ Turn AC ON</button>
+        <button class="ctrl-btn btn-ac-off" onclick="sendControl('ac', false)">❄️ Turn AC OFF</button>
+
+        <!-- Left Door (Driver Servo) -->
+        <button class="ctrl-btn btn-door-open" onclick="sendDoorControl('driver', 'open')">🔓 Open Left Door</button>
+        <button class="ctrl-btn btn-door-close" onclick="sendDoorControl('driver', 'closed')">🔒 Close Left Door</button>
+
+        <!-- Right Door (Passenger Servo) -->
+        <button class="ctrl-btn btn-door-open" onclick="sendDoorControl('passenger', 'open')">🔓 Open Right Door</button>
+        <button class="ctrl-btn btn-door-close" onclick="sendDoorControl('passenger', 'closed')">🔒 Close Right Door</button>
+
+        <!-- Both Doors -->
+        <button class="ctrl-btn btn-door-open" onclick="sendDoorControl('both', 'open')">🔓 Open Both Doors</button>
+        <button class="ctrl-btn btn-door-close" onclick="sendDoorControl('both', 'closed')">🔒 Close Both Doors</button>
+
+        <!-- Emergency Hazard Toggle Bar -->
+        <button class="hazard-btn-bar" id="hazardBtnBar" onclick="toggleEmergency()">
+          ⚠️ HAZARD WARNING FLASHERS: OFF (Tap to Toggle)
+        </button>
+
+        <!-- Refresh Sensors -->
+        <button class="refresh-sensors-btn" onclick="updateTelemetry()">
+          🔄 Refresh Sensor Telemetry
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Raspberry Pi 5 Model B &bull; Dual-Stack HTTP/HTTPS Audio Bridge &bull; Offline AI Assistant
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // VOICE COMMAND DIRECTORY DATA
+    // =========================================================================
+    const ALL_COMMANDS = [
+      // Compound Commands
+      { text: "Turn off the AC and headlights", cat: "compound", desc: "Compound objects: AC & Lights OFF" },
+      { text: "Turn on the AC and headlights", cat: "compound", desc: "Compound objects: AC & Lights ON" },
+      { text: "Open the driver door and turn on the headlights", cat: "compound", desc: "Sequential: Driver door & Lights" },
+      { text: "Close both doors and switch off the lights", cat: "compound", desc: "Sequential: Doors & Lights OFF" },
+      { text: "Before opening the passenger door, turn off the AC", cat: "compound", desc: "Inversion: AC OFF, then door open" },
+      { text: "Turn on the headlights, then turn them off", cat: "compound", desc: "Pronoun resolution: Lights ON then OFF" },
+      { text: "Turn off the headlights but keep the AC on", cat: "compound", desc: "Contrast: Lights OFF, keep AC ON" },
+      { text: "Turn on the headlights, AC, and open the driver door", cat: "compound", desc: "3 Actions: Lights, AC, Driver Door" },
+      { text: "Turn off the AC, switch off the headlights, and close both doors", cat: "compound", desc: "3 Actions: Shut down sequence" },
+      { text: "Turn off the AC, not the headlights", cat: "compound", desc: "Negative contrast: AC OFF only" },
+
+      // Headlights & Lighting
+      { text: "Turn on the headlights", cat: "lighting", desc: "Activate front vehicle headlights" },
+      { text: "Turn off the headlights", cat: "lighting", desc: "Deactivate vehicle headlights" },
+      { text: "Switch on the lights", cat: "lighting", desc: "Headlights activation synonym" },
+      { text: "Switch off the lights", cat: "lighting", desc: "Headlights deactivation synonym" },
+      { text: "Are the headlights on?", cat: "lighting", desc: "Query headlight operational status" },
+      { text: "What is the current light status?", cat: "lighting", desc: "Check vehicle lighting status" },
+      { text: "Keep the headlights on", cat: "lighting", desc: "State preservation: maintain lights ON" },
+      { text: "Leave the lights off", cat: "lighting", desc: "State preservation: maintain lights OFF" },
+
+      // Climate & AC
+      { text: "Turn on the AC", cat: "climate", desc: "Activate air conditioning cooling" },
+      { text: "Turn off the AC", cat: "climate", desc: "Deactivate air conditioning" },
+      { text: "Switch on the air conditioning", cat: "climate", desc: "Full noun AC activation" },
+      { text: "Switch off the air conditioning", cat: "climate", desc: "Full noun AC deactivation" },
+      { text: "Is the AC running?", cat: "climate", desc: "Query air conditioner status" },
+      { text: "Keep the AC running", cat: "climate", desc: "Maintain active cabin cooling" },
+      { text: "It is too warm in here, turn on the AC", cat: "climate", desc: "Causal preface command" },
+
+      // Door Controls
+      { text: "Open the driver door", cat: "doors", desc: "Actuate left servo to 90° (open)" },
+      { text: "Close the driver door", cat: "doors", desc: "Actuate left servo to 0° (closed)" },
+      { text: "Open the passenger door", cat: "doors", desc: "Actuate right servo to 90° (open)" },
+      { text: "Close the passenger door", cat: "doors", desc: "Actuate right servo to 0° (closed)" },
+      { text: "Open both doors", cat: "doors", desc: "Actuate both servos to 90°" },
+      { text: "Close both doors", cat: "doors", desc: "Actuate both servos to 0°" },
+      { text: "Is the driver door open?", cat: "doors", desc: "Check driver door position status" },
+      { text: "Check door status", cat: "doors", desc: "Query status of all doors" },
+
+      // Sensors & Telemetry
+      { text: "What is the cabin temperature?", cat: "sensors", desc: "Read DHT22 ambient temperature" },
+      { text: "Check the humidity", cat: "sensors", desc: "Read DHT22 relative humidity" },
+      { text: "How far away is the obstacle?", cat: "sensors", desc: "Read HC-SR04 ultrasonic distance" },
+      { text: "Check all the sensors", cat: "sensors", desc: "Full sensor diagnostic report" },
+      { text: "Report the current sensor readings", cat: "sensors", desc: "Summary telemetry broadcast" },
+
+      // Emergency Hazard Mode
+      { text: "Emergency mode on", cat: "emergency", desc: "Flash all LEDs in hazard mode" },
+      { text: "Emergency off", cat: "emergency", desc: "Deactivate hazard flashers" },
+      { text: "Hazard lights on", cat: "emergency", desc: "Activate emergency flashers" },
+      { text: "Hazard off", cat: "emergency", desc: "Deactivate emergency flashers" },
+
+      // Assistant & Session
+      { text: "Hello", cat: "assistant", desc: "Assistant greeting" },
+      { text: "What can you do?", cat: "assistant", desc: "List capabilities and commands" },
+      { text: "Help", cat: "assistant", desc: "Display available voice commands" },
+      { text: "Stop listening", cat: "assistant", desc: "Mute listening mode" },
+      { text: "Exit", cat: "assistant", desc: "Shutdown assistant application" }
+    ];
+
+    // Render Commands List
+    const commandsList = document.getElementById("commandsList");
+    function renderCommands(filterCat = "all") {
+      commandsList.innerHTML = "";
+      const filtered = filterCat === "all" ? ALL_COMMANDS : ALL_COMMANDS.filter(c => c.cat === filterCat);
+      filtered.forEach(cmd => {
+        const item = document.createElement("div");
+        item.className = "cmd-item";
+        item.innerHTML = `
+          <div class="cmd-info">
+            <div class="cmd-text">"${cmd.text}"</div>
+            <div class="cmd-cat">${cmd.desc}</div>
+          </div>
+          <div class="cmd-run-btn">▶ Run</div>
+        `;
+        item.addEventListener("click", () => executeTextCommand(cmd.text));
+        commandsList.appendChild(item);
+      });
+    }
+    renderCommands("all");
+
+    // Filter Tab click handling
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderCommands(btn.dataset.cat);
+      });
+    });
+
+    // =========================================================================
+    // 1. SPEECH HEARING INTERFACE LOGIC
+    // =========================================================================
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    const micBtn = document.getElementById("micBtn");
+    const micLabel = document.getElementById("micLabel");
+    const statusText = document.getElementById("statusText");
+    const waveform = document.getElementById("waveform");
+    const transcriptText = document.getElementById("transcriptText");
+    const intentBadges = document.getElementById("intentBadges");
+    const responseText = document.getElementById("responseText");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioUpload = document.getElementById("audioUpload");
+    const cmdInput = document.getElementById("cmdInput");
+    const sendCmdBtn = document.getElementById("sendCmdBtn");
+
+    // Mic Click Handler
+    micBtn.addEventListener("click", async () => {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    });
+
+    async function startRecording() {
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("Direct in-browser microphone access requires HTTPS. Tap 'Use Phone Sound Recorder' below for seamless audio!");
+          audioUpload.click();
+          return;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = e => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = sendRecordedAudio;
+        mediaRecorder.start();
+        isRecording = true;
+        micBtn.classList.add("recording");
+        waveform.classList.add("recording");
+        micLabel.textContent = "Listening... (Tap to Send)";
+        statusText.textContent = "Recording live voice...";
+      } catch (err) {
+        console.warn("Live mic blocked:", err);
+        statusText.textContent = "Mic blocked. Use sound recorder below.";
+        audioUpload.click();
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        isRecording = false;
+        micBtn.classList.remove("recording");
+        waveform.classList.remove("recording");
+        micLabel.textContent = "Processing...";
+        statusText.textContent = "Transcribing with whisper.cpp on Pi 5...";
+      }
+    }
+
+    async function sendRecordedAudio() {
+      const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || "audio/webm" });
+      await uploadAudioBlob(audioBlob);
+    }
+
+    // Phone Sound Recorder fallback
+    audioUpload.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      statusText.textContent = "Uploading audio from phone...";
+      await uploadAudioBlob(file);
+      audioUpload.value = "";
+    });
+
+    async function uploadAudioBlob(blob) {
+      const formData = new FormData();
+      formData.append("audio", blob, "recording.wav");
+
+      try {
+        statusText.textContent = "Transcribing with whisper.cpp...";
+        const res = await fetch("/api/command", { method: "POST", body: formData });
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || "Server processing failed");
+        }
+
+        const result = await res.json();
+        handleCommandResult(result);
+      } catch (err) {
+        console.error("Command upload failed:", err);
+        statusText.textContent = "Error: " + err.message;
+        micLabel.textContent = "Tap to Retry";
+      }
+    }
+
+    // Type command handler
+    sendCmdBtn.addEventListener("click", () => {
+      const txt = cmdInput.value.trim();
+      if (txt) {
+        executeTextCommand(txt);
+        cmdInput.value = "";
+      }
+    });
+    cmdInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        sendCmdBtn.click();
+      }
+    });
+
+    async function executeTextCommand(text) {
+      statusText.textContent = `Executing: "${text}"...`;
+      micLabel.textContent = "Processing...";
+
+      try {
+        const res = await fetch("/api/execute_text", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: jsonStringify({ text: text })
+        });
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || "Execution failed");
+        }
+        const result = await res.json();
+        handleCommandResult(result);
+      } catch (err) {
+        console.error("Execute text failed:", err);
+        statusText.textContent = "Error: " + err.message;
+        micLabel.textContent = "Tap to Speak Live";
+      }
+    }
+
+    function jsonStringify(obj) {
+      return JSON.stringify(obj);
+    }
+
+    function handleCommandResult(result) {
+      statusText.textContent = `Completed in ${result.total_latency_sec || 0}s`;
+      micLabel.textContent = "Tap to Speak Live";
+
+      transcriptText.textContent = `"${result.transcription || '(No speech detected)'}"`;
+
+      // Intent Badges
+      if (result.actions && result.actions.length > 0) {
+        intentBadges.innerHTML = result.actions.map(a => {
+          let paramStr = "";
+          if (a.parameters && Object.keys(a.parameters).length > 0) {
+            paramStr = ` (${Object.values(a.parameters).join(", ")})`;
+          }
+          return `<span class="val-intent" style="margin-right:4px;">${a.type}${paramStr}</span>`;
+        }).join("");
+      } else {
+        intentBadges.innerHTML = `<span class="val-intent">${result.intent || "UNKNOWN"}</span>`;
+      }
+
+      responseText.textContent = result.response || "No response generated.";
+
+      // Play audio response if available
+      if (result.has_audio) {
+        audioPlayer.src = "/api/response_audio?t=" + new Date().getTime();
+        audioPlayer.style.display = "block";
+        audioPlayer.play().catch(e => console.log("Audio autoplay suppressed"));
+      }
+
+      updateTelemetry();
+    }
+
+    // =========================================================================
+    // 3. AT LAST: CONTROLS & TELEMETRY LOGIC
+    // =========================================================================
+    const lightDot = document.getElementById("lightDot");
+    const lightState = document.getElementById("lightState");
+    const acDot = document.getElementById("acDot");
+    const acState = document.getElementById("acState");
+    const irDot = document.getElementById("irDot");
+    const irState = document.getElementById("irState");
+    const ultraDot = document.getElementById("ultraDot");
+    const distVal = document.getElementById("distVal");
+    const leftDoorVal = document.getElementById("leftDoorVal");
+    const rightDoorVal = document.getElementById("rightDoorVal");
+    const climateVal = document.getElementById("climateVal");
+    const hazardBtnBar = document.getElementById("hazardBtnBar");
+
+    async function updateTelemetry() {
+      try {
+        const res = await fetch("/api/status");
+        if (!res.ok) return;
+        const data = await res.json();
+
+        // Mode badge
+        if (data.mode) {
+          document.getElementById("hwModeBadge").textContent = "Mode: " + data.mode.toUpperCase();
+        }
+
+        // Emergency Hazard Mode
+        if (data.emergency) {
+          hazardBtnBar.classList.add("active");
+          hazardBtnBar.textContent = "🚨 EMERGENCY HAZARD ACTIVE (ALL LIGHTS FLASHING)";
+          lightDot.className = "indicator-light light-white active";
+          acDot.className = "indicator-light light-green active";
+          irDot.className = "indicator-light light-red active-solid";
+          ultraDot.className = "indicator-light light-yellow active-solid";
+        } else {
+          hazardBtnBar.classList.remove("active");
+          hazardBtnBar.textContent = "⚠️ HAZARD WARNING FLASHERS: OFF (Tap to Toggle)";
+
+          // 1. Headlights (White LED)
+          if (data.lights) {
+            lightDot.className = "indicator-light light-white active";
+            lightState.textContent = "ON";
+          } else {
+            lightDot.className = "indicator-light light-white";
+            lightState.textContent = "OFF";
+          }
+
+          // 2. AC Climate (Green LED - Blinks while ON)
+          if (data.ac) {
+            acDot.className = "indicator-light light-green active";
+            acState.textContent = "BLINKING (ON)";
+          } else {
+            acDot.className = "indicator-light light-green";
+            acState.textContent = "OFF";
+          }
+
+          // 3. IR Sensor (Red LED ONLY)
+          if (data.ir_detected) {
+            irDot.className = "indicator-light light-red active-solid";
+            irState.textContent = "DETECTED";
+            irState.style.color = "#ef4444";
+          } else {
+            irDot.className = "indicator-light light-red";
+            irState.textContent = "CLEAR";
+            irState.style.color = "#22c55e";
+          }
+
+          // 4. Ultrasonic Distance (Yellow LED ONLY)
+          if (data.distance !== undefined && data.distance !== null) {
+            const d = parseFloat(data.distance);
+            if (d < 5.0) {
+              ultraDot.className = "indicator-light light-yellow active-solid";
+              distVal.innerHTML = `<span style="color:#ef4444; font-weight:bold;">${d.toFixed(1)} cm (SOLID)</span>`;
+            } else if (d <= 10.0) {
+              ultraDot.className = "indicator-light light-yellow active-blink";
+              distVal.innerHTML = `<span style="color:#f59e0b; font-weight:bold;">${d.toFixed(1)} cm (BLINK)</span>`;
+            } else {
+              ultraDot.className = "indicator-light light-yellow";
+              distVal.textContent = d.toFixed(1) + " cm";
+            }
+          }
+
+          // 5. Door Servos
+          if (data.doors) {
+            if (leftDoorVal) {
+              const isLeftOpen = (data.doors.driver === "open");
+              leftDoorVal.innerHTML = isLeftOpen 
+                ? '<span style="color:#22c55e; font-weight:bold;">🔓 OPEN (90°)</span>' 
+                : '<span style="color:#94a3b8;">🔒 CLOSED (0°)</span>';
+            }
+            if (rightDoorVal) {
+              const isRightOpen = (data.doors.passenger === "open");
+              rightDoorVal.innerHTML = isRightOpen 
+                ? '<span style="color:#22c55e; font-weight:bold;">🔓 OPEN (90°)</span>' 
+                : '<span style="color:#94a3b8;">🔒 CLOSED (0°)</span>';
+            }
+          }
+        }
+
+        // Temperature & Humidity
+        if (data.temperature !== undefined && data.humidity !== undefined) {
+          climateVal.textContent = `${data.temperature}°C | ${data.humidity}%`;
+        }
+
+      } catch (e) {
+        // Silently retry next poll
+      }
+    }
+
+    setInterval(updateTelemetry, 1000);
+    updateTelemetry();
+
+    // Direct Control POST helper
+    async function sendControl(action, state) {
+      try {
+        const res = await fetch("/api/control", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: jsonStringify({ action: action, state: state })
+        });
+        const data = await res.json();
+        updateTelemetry();
+      } catch (e) {
+        console.error("Control failed:", e);
+      }
+    }
+
+    async function sendDoorControl(door, state) {
+      try {
+        const res = await fetch("/api/control", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: jsonStringify({ action: "door", door: door, state: state })
+        });
+        const data = await res.json();
+        updateTelemetry();
+      } catch (e) {
+        console.error("Door control failed:", e);
+      }
+    }
+
+    async function toggleEmergency() {
+      try {
+        const res = await fetch("/api/emergency", { method: "POST" });
+        const data = await res.json();
+        updateTelemetry();
+      } catch (e) {
+        console.error("Emergency toggle failed:", e);
+      }
+    }
+  </script>
+</body>
+</html>

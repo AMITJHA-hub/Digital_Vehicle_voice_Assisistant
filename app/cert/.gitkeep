@@ -1,0 +1,2 @@
+# SSL certificates (cert.pem, key.pem) can be auto-generated or placed here.
+# They are ignored in .gitignore for security.

@@ -1,0 +1,311 @@
+id,utterance,normalized_utterance,expected_actions,category,split,difficulty,supported,notes
+CMD_001,turn on the headlights,turn on the headlights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Canonical lights on
+CMD_002,switch on the headlights,switch on the headlights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Synonym verb switch on
+CMD_003,activate the headlights,activate the headlights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Formal verb activate
+CMD_004,"turn the lights on, please",turn the lights on please,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Split verb order with politeness
+CMD_005,headlights on,headlights on,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Telegraphic command
+CMD_006,turn on the car lights,turn on the car lights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Alternative noun phrase
+CMD_007,power on the headlights,power on the headlights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,easy,True,Synonym power on
+CMD_008,"hey assistant, please turn on the headlights",hey assistant please turn on the headlights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,medium,True,Wake phrase prefix with politeness
+CMD_009,turn off the headlights,turn off the headlights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,easy,True,Canonical lights off
+CMD_010,switch off the lights,switch off the lights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,easy,True,Synonym switch off
+CMD_011,deactivate the headlights,deactivate the headlights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,easy,True,Formal deactivate
+CMD_012,lights off,lights off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,easy,True,Telegraphic lights off
+CMD_013,shut off the headlights,shut off the headlights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,easy,True,Synonym shut off
+CMD_014,could you turn off the vehicle lights,could you turn off the vehicle lights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,medium,True,Polite request question form
+CMD_015,are the headlights on,are the headlights on,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,train,easy,True,Direct state question
+CMD_016,what is the current light status,what is the current light status,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,train,easy,True,Explicit status query
+CMD_017,check the headlights,check the headlights,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,train,easy,True,Imperative check query
+CMD_018,keep the headlights on,keep the headlights on,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,medium,True,State preservation verb keep
+CMD_019,leave the lights off,leave the lights off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,medium,True,State preservation verb leave
+CMD_020,enable vehicle lighting,enable vehicle lighting,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,train,medium,True,Alternative formal lighting noun
+CMD_021,disable vehicle lighting,disable vehicle lighting,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,train,medium,True,Alternative formal lighting off
+CMD_022,are the vehicle lights switched off,are the vehicle lights switched off,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,train,medium,True,Interrogative passive check
+CMD_023,switch the headlights on right now,switch the headlights on right now,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,dev,medium,True,Split verb with urgency suffix
+CMD_024,turn headlights off immediately,turn headlights off immediately,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,dev,medium,True,Immediate action suffix
+CMD_025,is the lighting active,is the lighting active,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,dev,medium,True,Formal inquiry
+CMD_026,please leave the headlights on,please leave the headlights on,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,dev,medium,True,Polite state preservation
+CMD_027,keep the lamps off,keep the lamps off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,dev,medium,True,Lamps synonym with keep
+CMD_028,check headlight status,check headlight status,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,dev,easy,True,Terse query
+CMD_029,can you switch on the lamps,can you switch on the lamps,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,dev,medium,True,Polite lamps request
+CMD_030,turn the headlights on for me,turn the headlights on for me,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,test,medium,True,Conversational beneficiary suffix
+CMD_031,shut the lights down,shut the lights down,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,test,medium,True,Phrasal verb shut down
+CMD_032,are my headlights currently turned on,are my headlights currently turned on,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,test,medium,True,Possessive pronoun question
+CMD_033,headlight status please,headlight status please,"[{""type"": ""GET_LIGHTS_STATUS"", ""parameters"": {}}]",lighting,test,easy,True,Terse query with politeness
+CMD_034,leave the headlights running,leave the headlights running,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",lighting,test,medium,True,Preservation variation
+CMD_035,make sure the lights stay off,make sure the lights stay off,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,test,hard,True,Stay off variation
+CMD_036,switch off the exterior lights,switch off the exterior lights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",lighting,test,medium,True,Exterior modifier
+CMD_037,turn on the ac,turn on the ac,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Canonical AC on
+CMD_038,switch on the air conditioning,switch on the air conditioning,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Full noun air conditioning
+CMD_039,start the air conditioner,start the air conditioner,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Verb start with air conditioner
+CMD_040,activate the ac,activate the ac,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Formal activate
+CMD_041,turn off the ac,turn off the ac,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Canonical AC off
+CMD_042,switch off the air conditioning,switch off the air conditioning,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Full noun air conditioning off
+CMD_043,stop the air conditioner,stop the air conditioner,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Verb stop air conditioner
+CMD_044,is the ac running,is the ac running,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,train,easy,True,Interrogative running check
+CMD_045,check the ac status,check the ac status,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,train,easy,True,Explicit status check
+CMD_046,keep the ac running,keep the ac running,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,medium,True,Keep AC running preservation
+CMD_047,leave the ac off,leave the ac off,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,medium,True,Leave AC off preservation
+CMD_048,it is too warm in here turn on the ac,it is too warm in here turn on the ac,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,medium,True,Causal preface warm cabin
+CMD_049,it is too hot turn on cooling,it is too hot turn on cooling,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,medium,True,Causal preface hot with cooling
+CMD_050,"turn the ac off, please",turn the ac off please,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Split verb order with politeness
+CMD_051,power on the air conditioning,power on the air conditioning,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Power on climate
+CMD_052,shut off the climate control,shut off the climate control,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,medium,True,Climate control shut off
+CMD_053,enable cabin cooling,enable cabin cooling,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,medium,True,Enable cabin cooling
+CMD_054,disable the ac,disable the ac,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Disable verb
+CMD_055,ac status,ac status,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,train,easy,True,Terse ac status
+CMD_056,ac on,ac on,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,train,easy,True,Terse ac on
+CMD_057,ac off,ac off,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,train,easy,True,Terse ac off
+CMD_058,start cooling the cabin,start cooling the cabin,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,dev,medium,True,Gerund cooling phrase
+CMD_059,stop the cooling system,stop the cooling system,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,dev,medium,True,Cooling system noun
+CMD_060,what is the ac status,what is the ac status,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,dev,easy,True,What is status inquiry
+CMD_061,is the climate control active,is the climate control active,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,dev,medium,True,Climate control query
+CMD_062,can you please turn on the air conditioner,can you please turn on the air conditioner,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,dev,medium,True,Polite request modal
+CMD_063,turn off the air conditioning for me,turn off the air conditioning for me,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,dev,medium,True,Beneficiary suffix
+CMD_064,keep cooling active,keep cooling active,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,dev,medium,True,Cooling active state preservation
+CMD_065,turn the ac on right now,turn the ac on right now,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,test,medium,True,Urgency adverbial
+CMD_066,shut down the air conditioning,shut down the air conditioning,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,test,medium,True,Shut down phrasal verb
+CMD_067,is the air conditioning currently turned on,is the air conditioning currently turned on,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,test,medium,True,Adverbial query currently
+CMD_068,it is getting warm please start the ac,it is getting warm please start the ac,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,test,medium,True,Progressive temperature preface
+CMD_069,leave the air conditioning switched off,leave the air conditioning switched off,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,test,medium,True,Switched off passive preservation
+CMD_070,check if the ac is running,check if the ac is running,"[{""type"": ""GET_AC_STATUS"", ""parameters"": {}}]",climate,test,medium,True,Embedded conditional clause
+CMD_071,power off the cooling unit,power off the cooling unit,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",climate,test,medium,True,Cooling unit phrasing
+CMD_072,activate cabin air conditioning please,activate cabin air conditioning please,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}]",climate,test,medium,True,Cabin modifier with politeness
+CMD_073,open the driver door,open the driver door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Open driver door
+CMD_074,open the driver's side door,open the driver s side door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Possessive driver's side
+CMD_075,open the left door,open the left door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Left directional mapping
+CMD_076,close the driver door,close the driver door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Close driver door
+CMD_077,shut the driver's door,shut the driver s door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Verb shut driver door
+CMD_078,close the left door,close the left door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Left directional close
+CMD_079,open the passenger door,open the passenger door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Open passenger door
+CMD_080,open the passenger's side door,open the passenger s side door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Possessive passenger's side
+CMD_081,open the right door,open the right door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Right directional mapping
+CMD_082,close the passenger door,close the passenger door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Close passenger door
+CMD_083,shut the passenger's door,shut the passenger s door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Verb shut passenger door
+CMD_084,close the right door,close the right door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Right directional close
+CMD_085,open both doors,open both doors,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,train,easy,True,Both doors open
+CMD_086,close both doors,close both doors,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,train,easy,True,Both doors close
+CMD_087,shut both doors,shut both doors,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,train,easy,True,Shut both doors
+CMD_088,open all doors,open all doors,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,train,easy,True,All doors open
+CMD_089,close all doors,close all doors,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,train,easy,True,All doors close
+CMD_090,is the driver door open,is the driver door open,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {""door"": ""driver""}}]",doors,train,easy,True,Driver door status query
+CMD_091,is the passenger door open,is the passenger door open,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {""door"": ""passenger""}}]",doors,train,easy,True,Passenger door status query
+CMD_092,check door status,check door status,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {}}]",doors,train,easy,True,General door status check
+CMD_093,check the doors,check the doors,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {}}]",doors,train,easy,True,Check doors query
+CMD_094,door status,door status,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {}}]",doors,train,easy,True,Terse door status
+CMD_095,open the door,open the door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,train,medium,True,Single door unspecified default behavior
+CMD_096,close the door,close the door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,train,medium,True,Single door close unspecified default
+CMD_097,could you open the driver door,could you open the driver door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,dev,medium,True,Polite modal request
+CMD_098,please shut the passenger door,please shut the passenger door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,dev,medium,True,Polite close request
+CMD_099,open driver side door,open driver side door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,dev,easy,True,Driver side without apostrophe
+CMD_100,close passenger side door,close passenger side door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,dev,easy,True,Passenger side without apostrophe
+CMD_101,are both doors closed,are both doors closed,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {""door"": ""both""}}]",doors,dev,easy,True,Both doors closed query
+CMD_102,are the vehicle doors open,are the vehicle doors open,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {}}]",doors,dev,medium,True,Vehicle doors query
+CMD_103,open the car door please,open the car door please,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,dev,medium,True,Ambiguous car door request
+CMD_104,shut the car door,shut the car door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,dev,medium,True,Ambiguous shut car door
+CMD_105,open the left side door,open the left side door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,test,medium,True,Left side phrase
+CMD_106,shut the left side door,shut the left side door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",doors,test,medium,True,Shut left side phrase
+CMD_107,open the right side door,open the right side door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,test,medium,True,Right side phrase
+CMD_108,shut the right side door,shut the right side door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",doors,test,medium,True,Shut right side phrase
+CMD_109,can you open both vehicle doors,can you open both vehicle doors,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,test,medium,True,Polite both doors request
+CMD_110,close both vehicle doors please,close both vehicle doors please,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",doors,test,medium,True,Polite both doors close
+CMD_111,check if the driver door is open,check if the driver door is open,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {""door"": ""driver""}}]",doors,test,medium,True,Check if conditional query
+CMD_112,is the passenger door shut,is the passenger door shut,"[{""type"": ""GET_DOOR_STATUS"", ""parameters"": {""door"": ""passenger""}}]",doors,test,medium,True,Shut state inquiry
+CMD_113,"open the door, please",open the door please,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,test,medium,True,Ambiguous open door request with comma
+CMD_114,shut the door please,shut the door please,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""unspecified""}}]",doors,test,medium,True,Ambiguous shut door request
+CMD_115,what is the cabin temperature,what is the cabin temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,Canonical cabin temperature
+CMD_116,tell me the temperature,tell me the temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,Imperative tell me temperature
+CMD_117,check the temperature,check the temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,Check temperature
+CMD_118,how hot is it inside,how hot is it inside,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,How hot inside inquiry
+CMD_119,how warm is the cabin,how warm is the cabin,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,How warm inquiry
+CMD_120,current temperature,current temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,easy,True,Terse temperature
+CMD_121,what is the temp in the car,what is the temp in the car,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,train,medium,True,Abbreviated temp
+CMD_122,check the humidity,check the humidity,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,train,easy,True,Canonical humidity
+CMD_123,what is the humidity,what is the humidity,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,train,easy,True,What is humidity query
+CMD_124,how humid is it inside,how humid is it inside,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,train,easy,True,How humid inquiry
+CMD_125,moisture level,moisture level,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,train,easy,True,Moisture level phrasing
+CMD_126,cabin humidity,cabin humidity,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,train,easy,True,Terse cabin humidity
+CMD_127,how far away is the obstacle,how far away is the obstacle,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,train,easy,True,Canonical distance query
+CMD_128,check the distance sensor,check the distance sensor,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,train,easy,True,Distance sensor check
+CMD_129,how close is the wall,how close is the wall,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,train,easy,True,Wall obstacle inquiry
+CMD_130,check the distance,check the distance,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,train,easy,True,Check distance
+CMD_131,proximity reading,proximity reading,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,train,easy,True,Proximity reading
+CMD_132,check all the sensors,check all the sensors,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,train,easy,True,All sensors check
+CMD_133,give me the sensor status,give me the sensor status,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,train,easy,True,Sensor status request
+CMD_134,report the current sensor readings,report the current sensor readings,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,train,easy,True,Report readings request
+CMD_135,are the sensors working,are the sensors working,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,train,easy,True,Sensors health check
+CMD_136,sensor diagnostics,sensor diagnostics,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,train,easy,True,Sensor diagnostics
+CMD_137,what is the indoor temperature,what is the indoor temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,dev,medium,True,Indoor modifier
+CMD_138,how cold is the car,how cold is the car,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,dev,easy,True,How cold inquiry
+CMD_139,check moisture level in the cabin,check moisture level in the cabin,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,dev,medium,True,Moisture level in cabin
+CMD_140,how humid is the cabin,how humid is the cabin,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,dev,easy,True,Cabin humidity inquiry
+CMD_141,range to obstacle,range to obstacle,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,dev,easy,True,Range phrasing
+CMD_142,proximity distance check,proximity distance check,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,dev,medium,True,Proximity distance check
+CMD_143,scan sensors,scan sensors,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,dev,easy,True,Scan sensors query
+CMD_144,tell me the current cabin temperature,tell me the current cabin temperature,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,test,medium,True,Tell me current cabin temp
+CMD_145,how hot is the car right now,how hot is the car right now,"[{""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",sensors,test,medium,True,How hot right now
+CMD_146,what is the current humidity percentage,what is the current humidity percentage,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,test,medium,True,Humidity percentage query
+CMD_147,check the moisture sensor please,check the moisture sensor please,"[{""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",sensors,test,medium,True,Moisture sensor check
+CMD_148,how far is the nearest obstacle,how far is the nearest obstacle,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,test,medium,True,Nearest obstacle phrasing
+CMD_149,distance to front obstacle,distance to front obstacle,"[{""type"": ""GET_DISTANCE"", ""parameters"": {}}]",sensors,test,medium,True,Front obstacle modifier
+CMD_150,give me full sensor diagnostics,give me full sensor diagnostics,"[{""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",sensors,test,medium,True,Full sensor diagnostics
+CMD_151,emergency mode,emergency mode,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,train,easy,True,Terse emergency
+CMD_152,activate emergency mode,activate emergency mode,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,train,easy,True,Activate emergency
+CMD_153,turn on emergency mode,turn on emergency mode,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,train,easy,True,Turn on emergency
+CMD_154,enable hazard lights,enable hazard lights,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,train,easy,True,Enable hazard lights
+CMD_155,hazard on,hazard on,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,train,easy,True,Terse hazard on
+CMD_156,emergency off,emergency off,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,easy,True,Terse emergency off
+CMD_157,disable emergency mode,disable emergency mode,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,easy,True,Disable emergency
+CMD_158,turn off hazard lights,turn off hazard lights,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,easy,True,Turn off hazard lights
+CMD_159,switch off emergency system,switch off emergency system,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,medium,True,Switch off emergency system
+CMD_160,hazard off,hazard off,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,easy,True,Terse hazard off
+CMD_161,stop hazard lights,stop hazard lights,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,train,easy,True,Stop hazard lights
+CMD_162,start hazard mode,start hazard mode,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,dev,easy,True,Start hazard mode
+CMD_163,turn on the hazard warning lights,turn on the hazard warning lights,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,dev,medium,True,Warning lights phrasing
+CMD_164,deactivate hazard mode,deactivate hazard mode,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,dev,medium,True,Deactivate hazard
+CMD_165,turn off the emergency flasher,turn off the emergency flasher,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,dev,medium,True,Flasher phrasing
+CMD_166,switch on emergency hazard mode,switch on emergency hazard mode,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,test,medium,True,Switch on hazard mode
+CMD_167,please enable the hazard lights immediately,please enable the hazard lights immediately,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",emergency,test,medium,True,Polite immediate hazard on
+CMD_168,disable the hazard warning system,disable the hazard warning system,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}]",emergency,test,medium,True,Warning system disable
+CMD_169,hello,hello,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,train,easy,True,Greeting hello
+CMD_170,hi,hi,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,train,easy,True,Greeting hi
+CMD_171,hey,hey,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,train,easy,True,Greeting hey
+CMD_172,good morning,good morning,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,train,easy,True,Good morning
+CMD_173,how are you,how are you,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,train,easy,True,How are you
+CMD_174,help,help,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,train,easy,True,Help command
+CMD_175,what can you do,what can you do,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,train,easy,True,What can you do
+CMD_176,show commands,show commands,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,train,easy,True,Show commands
+CMD_177,list commands,list commands,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,train,easy,True,List commands
+CMD_178,options,options,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,train,easy,True,Options query
+CMD_179,exit,exit,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,train,easy,True,Exit command
+CMD_180,quit,quit,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,train,easy,True,Quit command
+CMD_181,goodbye,goodbye,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,train,easy,True,Goodbye command
+CMD_182,shutdown system,shutdown system,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,train,medium,True,Shutdown system
+CMD_183,close assistant,close assistant,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,train,medium,True,Close assistant
+CMD_184,stop listening,stop listening,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,train,easy,True,Stop listening
+CMD_185,mute assistant,mute assistant,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,train,easy,True,Mute assistant
+CMD_186,pause listening,pause listening,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,train,easy,True,Pause listening
+CMD_187,go to sleep,go to sleep,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,train,easy,True,Go to sleep
+CMD_188,good evening,good evening,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,dev,easy,True,Good evening
+CMD_189,greetings,greetings,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,dev,easy,True,Formal greetings
+CMD_190,what are your commands,what are your commands,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,dev,medium,True,What are your commands
+CMD_191,terminate application,terminate application,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,dev,medium,True,Terminate application
+CMD_192,shut down the program,shut down the program,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,dev,medium,True,Shut down program
+CMD_193,stop listening to me,stop listening to me,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,dev,medium,True,Stop listening to me
+CMD_194,good afternoon,good afternoon,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,test,easy,True,Good afternoon
+CMD_195,hello assistant,hello assistant,"[{""type"": ""GREETING"", ""parameters"": {}}]",assistant,test,medium,True,Hello with assistant
+CMD_196,show me available options,show me available options,"[{""type"": ""HELP"", ""parameters"": {}}]",assistant,test,medium,True,Available options query
+CMD_197,terminate assistant,terminate assistant,"[{""type"": ""EXIT"", ""parameters"": {}}]",assistant,test,medium,True,Terminate assistant
+CMD_198,pause voice assistant,pause voice assistant,"[{""type"": ""STOP_LISTENING"", ""parameters"": {}}]",assistant,test,medium,True,Pause voice assistant
+CMD_199,turn off the ac and headlights,turn off the ac and headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Compound object turn off AC and lights
+CMD_200,turn on the ac and headlights,turn on the ac and headlights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,medium,True,Compound object turn on AC and lights
+CMD_201,switch off the lights and turn off the ac,switch off the lights and turn off the ac,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Sequential turn off lights and AC
+CMD_202,activate the headlights and air conditioning,activate the headlights and air conditioning,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,Formal activate compound object
+CMD_203,turn on the lights and switch off the ac,turn on the lights and switch off the ac,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Mixed state lights on AC off
+CMD_204,turn off the headlights but keep the ac on,turn off the headlights but keep the ac on,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,Contrast clause with keep AC on
+CMD_205,turn on the ac but turn off the headlights,turn on the ac but turn off the headlights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Contrast clause AC on lights off
+CMD_206,turn off both the ac and the lights,turn off both the ac and the lights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Both modifier compound object
+CMD_207,turn on both headlights and ac,turn on both headlights and ac,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,Both modifier lights and AC
+CMD_208,open the driver door and turn on the headlights,open the driver door and turn on the headlights,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,medium,True,Door and lights compound
+CMD_209,close the passenger door and turn off the ac,close the passenger door and turn off the ac,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Door and AC compound
+CMD_210,open both doors and turn on the ac,open both doors and turn on the ac,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,Both doors and AC
+CMD_211,close both doors and switch off the lights,close both doors and switch off the lights,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Both doors and lights off
+CMD_212,"turn on the headlights, ac, and open the driver door",turn on the headlights ac and open the driver door,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,train,hard,True,Three action compound sequence
+CMD_213,"turn off the ac, switch off the headlights, and close both doors",turn off the ac switch off the headlights and close both doors,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,train,hard,True,Three action compound shut down
+CMD_214,"turn off the ac first, then turn off the headlights",turn off the ac first then turn off the headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Sequential first then
+CMD_215,"before opening the passenger door, turn off the ac",before opening the passenger door turn off the ac,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,train,hard,True,Sequential inversion with before
+CMD_216,keep the lights on but turn the ac off,keep the lights on but turn the ac off,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Keep lights on contrast
+CMD_217,"close the driver door and turn on the ac, please",close the driver door and turn on the ac please,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,train,medium,True,Compound with trailing politeness
+CMD_218,"turn on the headlights, then turn them off",turn on the headlights then turn them off,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,hard,True,Pronoun anaphora resolution them lights
+CMD_219,"start the ac, then turn it off",start the ac then turn it off,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,hard,True,Pronoun anaphora resolution it AC
+CMD_220,"turn off the ac, not the headlights",turn off the ac not the headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Negative contrast suppression
+CMD_221,"turn on headlights, not the ac",turn on headlights not the ac,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,medium,True,Negative contrast headlights only
+CMD_222,open the driver door and open the passenger door,open the driver door and open the passenger door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,train,medium,True,Two door open compound
+CMD_223,close the driver door and open the passenger door,close the driver door and open the passenger door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,train,medium,True,Opposing door operations
+CMD_224,open the driver door and turn off the lights,open the driver door and turn off the lights,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Driver door and lights off
+CMD_225,turn on hazard mode and turn on the headlights,turn on hazard mode and turn on the headlights,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,medium,True,Hazard and headlights compound
+CMD_226,disable emergency mode and turn off the lights,disable emergency mode and turn off the lights,"[{""type"": ""EMERGENCY_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,medium,True,Hazard off and lights off
+CMD_227,"activate headlights, then open both doors",activate headlights then open both doors,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,train,medium,True,Activate lights then open both doors
+CMD_228,close both doors and turn off the ac,close both doors and turn off the ac,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,medium,True,Close both doors and AC off
+CMD_229,"open the passenger door, then close it",open the passenger door then close it,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,train,hard,True,Door open and close pronoun
+CMD_230,"switch on the lights, then turn them off",switch on the lights then turn them off,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,train,hard,True,Switch lights on and off pronoun
+CMD_231,turn on the ac and activate hazard lights,turn on the ac and activate hazard lights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",compound,train,medium,True,AC and hazard compound
+CMD_232,"close the driver door, not the passenger door",close the driver door not the passenger door,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,train,medium,True,Negative contrast door target
+CMD_233,turn on the lights and check the temperature,turn on the lights and check the temperature,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",compound,train,medium,True,Actuator and sensor query compound
+CMD_234,close both doors and check the humidity,close both doors and check the humidity,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""GET_HUMIDITY"", ""parameters"": {}}]",compound,train,medium,True,Door actuator and humidity query
+CMD_235,turn on the headlights and check the distance sensor,turn on the headlights and check the distance sensor,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""GET_DISTANCE"", ""parameters"": {}}]",compound,train,medium,True,Lights and distance query
+CMD_236,switch off the ac and report the current sensor readings,switch off the ac and report the current sensor readings,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",compound,train,medium,True,AC off and diagnostic report
+CMD_237,"open the driver door, turn on the ac, and turn on the headlights",open the driver door turn on the ac and turn on the headlights,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,train,hard,True,Three action compound door ac lights
+CMD_238,"close both doors, switch off the lights, and turn off the ac",close both doors switch off the lights and turn off the ac,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,train,hard,True,Three action shut down sequence
+CMD_239,switch on the headlights and the ac,switch on the headlights and the ac,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,dev,medium,True,Compound object lights and ac
+CMD_240,turn off the headlights and the ac,turn off the headlights and the ac,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,dev,medium,True,Compound object lights off and ac off
+CMD_241,open the driver door and close the passenger door,open the driver door and close the passenger door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,dev,medium,True,Dual door operation
+CMD_242,close the driver door and switch on the lights,close the driver door and switch on the lights,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,dev,medium,True,Door close lights on
+CMD_243,open the passenger door and switch on the ac,open the passenger door and switch on the ac,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,dev,medium,True,Passenger door and ac on
+CMD_244,"turn off the headlights, then turn off the ac",turn off the headlights then turn off the ac,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,dev,medium,True,Sequential then lights and ac off
+CMD_245,"before closing both doors, turn off the lights",before closing both doors turn off the lights,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,dev,hard,True,Before inversion doors and lights
+CMD_246,keep the ac on but switch off the headlights,keep the ac on but switch off the headlights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,dev,medium,True,Contrast ac on lights off
+CMD_247,leave the headlights off and close the driver door,leave the headlights off and close the driver door,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,dev,medium,True,Leave lights off close driver door
+CMD_248,"open both doors, turn on the ac, and activate hazard mode",open both doors turn on the ac and activate hazard mode,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""EMERGENCY_ON"", ""parameters"": {}}]",compound,dev,hard,True,Three action compound doors ac hazard
+CMD_249,"turn off the lights, not the ac",turn off the lights not the ac,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,dev,medium,True,Negative contrast lights only
+CMD_250,"switch on the ac first, then open the driver door",switch on the ac first then open the driver door,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,dev,medium,True,Sequential first then AC and door
+CMD_251,power on the headlights and start the air conditioning,power on the headlights and start the air conditioning,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_ON"", ""parameters"": {}}]",compound,test,medium,True,Synonym verb compound lights and ac
+CMD_252,shut off the air conditioning and deactivate headlights,shut off the air conditioning and deactivate headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,test,medium,True,Synonym shut off and deactivate
+CMD_253,open the passenger door and turn on the headlights,open the passenger door and turn on the headlights,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,test,medium,True,Passenger door and headlights
+CMD_254,close the driver door and turn off the lights,close the driver door and turn off the lights,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""LIGHTS_OFF"", ""parameters"": {}}]",compound,test,medium,True,Close driver and lights off
+CMD_255,"open both doors, then close both doors",open both doors then close both doors,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,test,medium,True,Open then close both doors
+CMD_256,"before opening the driver door, turn off the ac",before opening the driver door turn off the ac,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""driver""}}]",compound,test,hard,True,Inverted before order driver door
+CMD_257,"before closing the passenger door, turn on the lights",before closing the passenger door turn on the lights,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,test,hard,True,Inverted before order passenger door
+CMD_258,"turn on the air conditioner, then turn it off",turn on the air conditioner then turn it off,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,test,hard,True,Pronoun anaphora air conditioner
+CMD_259,leave the ac off but turn on the headlights,leave the ac off but turn on the headlights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,test,medium,True,Contrast leave ac off headlights on
+CMD_260,keep the headlights on and close both doors,keep the headlights on and close both doors,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,test,medium,True,Keep headlights on close doors
+CMD_261,"turn off the headlights, switch off the ac, and close both doors",turn off the headlights switch off the ac and close both doors,"[{""type"": ""LIGHTS_OFF"", ""parameters"": {}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}, {""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,test,hard,True,Three action shut down lights ac doors
+CMD_262,"turn on the ac, open both doors, and turn on the headlights",turn on the ac open both doors and turn on the headlights,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,test,hard,True,Three action AC doors headlights
+CMD_263,"turn off the ac, not the lights",turn off the ac not the lights,"[{""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,test,medium,True,Negative contrast AC not lights
+CMD_264,"open the passenger door, not the driver door",open the passenger door not the driver door,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}]",compound,test,medium,True,Negative contrast passenger only
+CMD_265,turn on the headlights and check the cabin temperature,turn on the headlights and check the cabin temperature,"[{""type"": ""LIGHTS_ON"", ""parameters"": {}}, {""type"": ""GET_TEMPERATURE"", ""parameters"": {}}]",compound,test,medium,True,Lights on and cabin temperature query
+CMD_266,close both doors and give me the sensor status,close both doors and give me the sensor status,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""both""}}, {""type"": ""GET_SENSOR_STATUS"", ""parameters"": {}}]",compound,test,medium,True,Close doors and sensor status query
+CMD_267,enable hazard mode and open both doors,enable hazard mode and open both doors,"[{""type"": ""EMERGENCY_ON"", ""parameters"": {}}, {""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""both""}}]",compound,test,medium,True,Hazard on and open doors
+CMD_268,"turn on the ac and turn on the headlights, please",turn on the ac and turn on the headlights please,"[{""type"": ""TURN_AC_ON"", ""parameters"": {}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,test,medium,True,Compound with trailing please
+CMD_269,"close the driver door first, then turn on the headlights",close the driver door first then turn on the headlights,"[{""type"": ""CLOSE_DOOR"", ""parameters"": {""door"": ""driver""}}, {""type"": ""LIGHTS_ON"", ""parameters"": {}}]",compound,test,medium,True,First then sequence driver door and lights
+CMD_270,"open the passenger door first, then turn off the ac",open the passenger door first then turn off the ac,"[{""type"": ""OPEN_DOOR"", ""parameters"": {""door"": ""passenger""}}, {""type"": ""TURN_AC_OFF"", ""parameters"": {}}]",compound,test,medium,True,First then sequence passenger door and AC
+CMD_271,play some rock music,play some rock music,[],unsupported,train,easy,False,Unsupported media playback
+CMD_272,play music on spotify,play music on spotify,[],unsupported,train,easy,False,Unsupported streaming service
+CMD_273,turn on the radio,turn on the radio,[],unsupported,train,easy,False,Unsupported radio feature
+CMD_274,increase the radio volume,increase the radio volume,[],unsupported,train,easy,False,Unsupported audio volume control
+CMD_275,navigate to downtown,navigate to downtown,[],unsupported,train,easy,False,Unsupported GPS navigation
+CMD_276,set navigation to home,set navigation to home,[],unsupported,train,easy,False,Unsupported home routing
+CMD_277,what is the fastest route to work,what is the fastest route to work,[],unsupported,train,easy,False,Unsupported traffic route query
+CMD_278,roll down the driver window,roll down the driver window,[],unsupported,train,easy,False,Unsupported window actuator
+CMD_279,roll up all windows,roll up all windows,[],unsupported,train,easy,False,Unsupported all window actuator
+CMD_280,open the sunroof,open the sunroof,[],unsupported,train,easy,False,Unsupported sunroof actuator
+CMD_281,adjust the driver seat forward,adjust the driver seat forward,[],unsupported,train,easy,False,Unsupported seat motor
+CMD_282,set the cabin temperature to 20 degrees,set the cabin temperature to 20 degrees,[],unsupported,train,medium,False,Unsupported temperature adjustment value
+CMD_283,change temperature to 22 celsius,change temperature to 22 celsius,[],unsupported,train,medium,False,Unsupported temperature setting value
+CMD_284,lower the ac temperature,lower the ac temperature,[],unsupported,train,medium,False,Unsupported thermostat adjustment
+CMD_285,unlock the driver door,unlock the driver door,[],unsupported,train,medium,False,Unsupported lock actuator (unlock != open)
+CMD_286,lock all vehicle doors,lock all vehicle doors,[],unsupported,train,medium,False,Unsupported lock actuator (lock != close)
+CMD_287,call mom on the phone,call mom on the phone,[],unsupported,train,easy,False,Unsupported cellular call
+CMD_288,send a text message to john,send a text message to john,[],unsupported,train,easy,False,Unsupported SMS text messaging
+CMD_289,what is the weather forecast today,what is the weather forecast today,[],unsupported,train,easy,False,Unsupported external weather service
+CMD_290,turn off the ac and play music,turn off the ac and play music,[],unsupported,train,hard,False,Safety rejection: mixed supported AC and unsupported music
+CMD_291,open the driver door and navigate home,open the driver door and navigate home,[],unsupported,train,hard,False,Safety rejection: mixed supported door and unsupported navigation
+CMD_292,turn on the headlights and roll down the windows,turn on the headlights and roll down the windows,[],unsupported,train,hard,False,Safety rejection: mixed supported lights and unsupported windows
+CMD_293,open the door and turn on the ac,open the door and turn on the ac,[],unsupported,train,hard,False,Safety rejection: compound with ambiguous door target
+CMD_294,close the door and switch off the lights,close the door and switch off the lights,[],unsupported,train,hard,False,Safety rejection: compound with ambiguous close door
+CMD_295,play the latest podcast,play the latest podcast,[],unsupported,dev,easy,False,Unsupported podcast player
+CMD_296,find nearest gas station,find nearest gas station,[],unsupported,dev,easy,False,Unsupported POI navigation
+CMD_297,close the sunroof,close the sunroof,[],unsupported,dev,easy,False,Unsupported sunroof close
+CMD_298,adjust side mirrors,adjust side mirrors,[],unsupported,dev,easy,False,Unsupported mirror actuator
+CMD_299,set ac to 18 degrees,set ac to 18 degrees,[],unsupported,dev,medium,False,Unsupported AC temperature value
+CMD_300,unlock the passenger door,unlock the passenger door,[],unsupported,dev,medium,False,Unsupported unlock passenger
+CMD_301,turn on the ac and play jazz,turn on the ac and play jazz,[],unsupported,dev,hard,False,Safety rejection: mixed supported AC and unsupported jazz
+CMD_302,open the door and switch on headlights,open the door and switch on headlights,[],unsupported,dev,hard,False,Safety rejection: compound ambiguous door target
+CMD_303,play songs by the beatles,play songs by the beatles,[],unsupported,test,easy,False,Unsupported artist playback
+CMD_304,navigate to airport,navigate to airport,[],unsupported,test,easy,False,Unsupported airport navigation
+CMD_305,roll down passenger window,roll down passenger window,[],unsupported,test,easy,False,Unsupported passenger window
+CMD_306,increase temperature by two degrees,increase temperature by two degrees,[],unsupported,test,medium,False,Unsupported relative temperature increment
+CMD_307,unlock all doors,unlock all doors,[],unsupported,test,medium,False,Unsupported unlock all doors
+CMD_308,read my unread emails,read my unread emails,[],unsupported,test,easy,False,Unsupported email reader
+CMD_309,turn off the headlights and play the radio,turn off the headlights and play the radio,[],unsupported,test,hard,False,Safety rejection: mixed supported lights and unsupported radio
+CMD_310,open the door and turn off the ac,open the door and turn off the ac,[],unsupported,test,hard,False,Safety rejection: compound ambiguous door target

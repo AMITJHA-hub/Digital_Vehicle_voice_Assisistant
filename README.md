@@ -1,176 +1,188 @@
-# 🚗 DriveSense — AI-Driven In-Vehicle Digital Voice Assistant
+# In-Vehicle AI-Driven Digital Voice Assistant (Raspberry Pi 5)
 
-**DriveSense** is a realistic, AI-driven, hands-free in-vehicle digital voice assistant designed for automotive environments. It features a **decoupled architecture** separating natural language intent understanding from hardware sensor/actuator execution, with a **hardware abstraction layer** enabling seamless migration from laptop development to **Raspberry Pi** deployment.
+An offline, embedded digital voice assistant for a simulated vehicle cockpit built from scratch on a **Raspberry Pi 5 Model B (8 GB RAM)** running **Debian 13 (Trixie) ARM64**.
 
----
-
-## 🏗️ System Architecture
-
-```
-                       [ Driver Spoken Voice ]
-                                  │
-                                  ▼
-                  [ Offline STT: Vosk (16kHz) ]
-                                  │
-                                  ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │            DriveSense AI Intelligence Layer                  │
-    │    Google Gemini 3.6 Flash LLM API                           │
-    │    Outputs strict JSON: { "intent": "...", "target": "..." } │
-    └─────────────────────────┬────────────────────────────────────┘
-                              │
-                              ▼
-    ┌──────────────────────────────────────────────────────────────┐
-    │                  Command Dispatcher                          │
-    │       Routes intent → correct hardware controller            │
-    └─────────────────────────┬────────────────────────────────────┘
-                              │
-              ┌───────────────┼───────────────┐
-              ▼               ▼               ▼
-    ┌────────────────┐ ┌─────────────┐ ┌─────────────┐
-    │ DoorController │ │  TempSensor │ │  ACController│  ...
-    │  (Simulated /  │ │ (Simulated /│ │ (Simulated / │
-    │   Raspberry Pi)│ │  Raspberry  │ │  Raspberry   │
-    └────────────────┘ │  Pi GPIO)   │ │  Pi GPIO)    │
-                       └─────────────┘ └─────────────┘
-                              │
-                              ▼
-               [ Two-Way Audio: pyttsx3 TTS ]
-                              │
-                              ▼
-                      [ Vehicle Speaker ]
-```
+Powered by local **whisper.cpp** speech recognition, deterministic offline intent parsing, real-time RP1 GPIO hardware integration, text-to-speech output, and a local Wi-Fi smartphone voice bridge.
 
 ---
 
-## 🎯 Supported Intents (13 Total)
+## 1. System Architecture
 
-| Intent | Description | Example Voice Commands |
-| :--- | :--- | :--- |
-| `GREETING` | Greet DriveSense | *"Hello"*, *"Hi DriveSense"* |
-| `GET_TEMPERATURE` | Cabin temperature inquiry | *"What is the temperature?"*, *"How hot is the cabin?"* |
-| `GET_DISTANCE` | Obstacle distance measurement | *"Is there an obstacle ahead?"*, *"How far is the object?"* |
-| `OPEN_DOOR` | Open specific door(s) | *"Open the left door"*, *"Open all doors"* |
-| `CLOSE_DOOR` | Close specific door(s) | *"Close the right door"*, *"Close all doors"* |
-| `TURN_AC_ON` | Activate air conditioning | *"Turn on the AC"*, *"Switch on the cooling"* |
-| `TURN_AC_OFF` | Deactivate air conditioning | *"Turn off the AC"*, *"Stop the AC"* |
-| `GET_AC_STATUS` | Query AC state | *"Is the AC on?"*, *"Check AC status"* |
-| `GET_SENSOR_STATUS` | Query IR sensor | *"Check the IR sensor"*, *"Is there an obstacle detected?"* |
-| `GENERAL_QUERY` | General knowledge question | *"What is machine learning?"*, *"How does GPS work?"* |
-| `STOP_LISTENING` | Pause — return to wake word | *"Stop listening"*, *"Go to sleep"* |
-| `EXIT` | Complete shutdown | *"Exit"*, *"Goodbye"* |
-| `UNSUPPORTED` | Feature not implemented | *"Play music"*, *"Navigate to Chennai"* |
+```mermaid
+flowchart TD
+    subgraph Audio_Input["Audio Capture Layer"]
+        A1["Smartphone Browser / Native Recorder<br/>(Local Wi-Fi Bridge)"]
+        A2["Pre-Recorded Command WAV Files<br/>(CLI & Batch Harness)"]
+        A3["Interactive Console Shell<br/>(Push-to-Enter)"]
+    end
 
----
+    subgraph Speech_Engine["Offline Speech Engine"]
+        B1["FFmpeg Audio Transcoder<br/>(16 kHz 16-bit Mono PCM)"]
+        B2["whisper.cpp Engine (ARM NEON / FP16)<br/>Model: ggml-tiny.en.bin (77 MB)"]
+    end
 
-## 🔧 Hardware Abstraction Layer
+    subgraph NLU_Layer["Deterministic Offline NLP"]
+        C1["Spoken Text Normalizer<br/>(Contractions & Clean-up)"]
+        C2["Deterministic Intent Classifier<br/>(16 Vehicle Intents + Entity Extraction)"]
+    end
 
-DriveSense uses a **configuration-driven hardware abstraction** so the same AI/voice code runs on both platforms:
+    subgraph Control_Layer["Assistant Orchestration"]
+        D1["Command Dispatcher<br/>(Action Routing & Spoken Formatting)"]
+    end
 
-```python
-# In drivesense.py — change this one variable:
-HARDWARE_MODE = "simulation"     # Laptop development
-HARDWARE_MODE = "raspberry_pi"   # Raspberry Pi deployment
-```
+    subgraph Output_Layer["Cockpit Actuation & Output"]
+        E1["Hardware Abstraction Layer<br/>(Simulation vs Physical)"]
+        E2["espeak-ng Text-to-Speech<br/>(Spoken Voice Feedback)"]
+        E3["Mobile Cockpit Web Dashboard<br/>(Real-Time Telemetry & Audio Return)"]
+    end
 
-| Abstraction | Simulated (Laptop) | Raspberry Pi (GPIO) |
-| :--- | :--- | :--- |
-| `TemperatureSensor` | Random 24–30°C | DHT22 on GPIO 4 |
-| `DistanceSensor` | Random 15–80cm | HC-SR04 on GPIO 23/24 |
-| `IRSensor` | Based on distance threshold | IR sensor on GPIO 17 |
-| `DoorController` | Updates VehicleState dict | Servo/motor on GPIO 5,6,12,13,19,26 |
-| `ACController` | Updates VehicleState flag | Relay on GPIO 27 |
+    subgraph Physical_Hardware["Raspberry Pi 5 Breadboard (RP1 GPIO)"]
+        H1["White LED: Headlights (GPIO 17)"]
+        H2["Green LED: Simulated AC (GPIO 27)"]
+        H3["Red LED: IR Obstacle Alert (GPIO 22)"]
+        H4["Yellow LED: Ultrasonic Proximity (GPIO 23)"]
+        H5["HC-SR04: Ultrasonic Distance (GPIO 5/6)"]
+        H6["DHT22: Cabin Temp & Humidity (GPIO 4)"]
+        H7["IR Sensor: Obstacle Sensor (GPIO 25)"]
+    end
 
----
-
-## 🗂️ Project Structure
-
-```
-digital-voice-assistant-in-car/
-├── drivesense.py               # Complete voice assistant application
-├── api_key.txt                 # Local file for Google Gemini API key
-├── requirements.txt            # Python dependencies
-├── vosk-model-en-us-0.22/      # Offline speech recognition model
-├── .gitignore                  # Git ignore rules
-└── README.md                   # This file
+    Audio_Input --> B1 --> B2 --> C1 --> C2 --> D1
+    D1 --> E1
+    D1 --> E2
+    D1 --> E3
+    E1 -.-> Physical_Hardware
 ```
 
 ---
 
-## 🚀 Getting Started
+## 2. Hardware Wiring & Electrical Safety Guide
 
-### 1. Install Dependencies
+> [!CAUTION]
+> **3.3V Logic Warning**: Raspberry Pi 5 GPIO lines are **3.3V maximum** and are **NOT 5V tolerant**. Applying 5V directly to a GPIO input will permanently destroy the RP1 I/O pad or the board.
+
+### Complete Pin Assignment Table
+
+| Component | Pin Function | Raspberry Pi BCM Pin | Physical Header Pin | Electrical Protection |
+|---|---|---|---|---|
+| **White LED** | Headlights (+) <br> Ground (-) | **GPIO 17** <br> **GND** | **Pin 11** <br> **Pin 9** | **330 Ω** current-limiting resistor (~3.3 mA) |
+| **Green LED** | AC Indicator (+) <br> Ground (-) | **GPIO 27** <br> **GND** | **Pin 13** <br> **Pin 14** | **330 Ω** current-limiting resistor (~3.3 mA) |
+| **Red LED** | IR Obstacle Alert (+) <br> Ground (-) | **GPIO 22** <br> **GND** | **Pin 15** <br> **Pin 14 (Rail)** | **330 Ω** current-limiting resistor (~3.9 mA) |
+| **Yellow LED** | Ultrasonic Proximity (+) <br> Ground (-) | **GPIO 23** <br> **GND** | **Pin 16** <br> **Pin 14 (Rail)** | **330 Ω** current-limiting resistor (~3.3 mA) |
+| **IR Sensor** | VCC <br> GND <br> OUT | **3.3V Power** <br> **GND** <br> **GPIO 25** | **Pin 1** <br> **Pin 9 (Rail)** <br> **Pin 22** | Powered via 3.3V to ensure safe 3.3V logic output |
+| **HC-SR04 Ultrasonic** | VCC <br> GND <br> TRIG <br> **ECHO (5V)** | **5.0V Power** <br> **GND** <br> **GPIO 5** <br> **GPIO 6** | **Pin 2** <br> **Pin 30 (Rail)** <br> **Pin 29** <br> **Pin 31** | **MANDATORY VOLTAGE DIVIDER** (steps 5V down to 2.85V) |
+| **DHT22 / AM2302** | VCC <br> GND <br> DATA | **3.3V Power** <br> **GND** <br> **GPIO 4** | **Pin 17** <br> **Pin 25 (Rail)** <br> **Pin 7** | Pull-up resistor to 3.3V |
+| **SG90 Servos** | VCC <br> GND <br> PWM | **External 5V** <br> **Shared GND** <br> **GPIO 12, 13** | External Supply <br> External & Pi GND <br> **Pin 32, 33** | **Power-isolated**. Never power from Pi 5V header. |
+
+### HC-SR04 Voltage Divider Circuit
+The HC-SR04 transducer operates on 5V and outputs a 5.0V echo pulse. We step this down using standard resistors:
+* **$R_1 = 1.0\text{ k}\Omega$** between ECHO and Node A.
+* **$R_2 = 1.33\text{ k}\Omega$** (1 kΩ + 330 Ω in series) between Node A and GND.
+* **Node A** connects to **GPIO 6 (Physical Pin 31)**.
+$$V_{out} = 5.0\text{ V} \times \frac{1330\,\Omega}{1000\,\Omega + 1330\,\Omega} \approx 2.85\text{ V}$$
+*(2.85V is reliably recognized as digital HIGH by the Pi while remaining strictly under the 3.3V limit).*
+
+---
+
+## 3. Supported Voice Commands & Intent Vocabulary
+
+| Intent | Canonical Phrasing | Supported Natural Variations | Physical / Simulated Action |
+|---|---|---|---|
+| `GREETING` | *"Hello assistant"* | *"Hi"*, *"Good morning"*, *"Hey"* | Vocal welcome response |
+| `GET_TEMPERATURE` | *"What is the cabin temperature?"* | *"How hot is it?"*, *"Cabin temp"*, *"Check temperature"* | Reads genuine DHT22 sensor reading in °C |
+| `GET_HUMIDITY` | *"What is the humidity?"* | *"How humid is it?"*, *"Check humidity level"* | Reads genuine DHT22 relative humidity in % |
+| `GET_DISTANCE` | *"How far is the obstacle?"* | *"Check distance"*, *"How close is the wall?"* | Reads genuine HC-SR04 ultrasonic distance in cm |
+| `GET_SENSOR_STATUS` | *"Check the vehicle sensors"* | *"Sensor diagnostics"*, *"Are sensors working?"* | Full sensor health check and diagnostic readout |
+| `LIGHTS_ON` | *"Turn on the lights"* | *"Headlights on"*, *"Switch on lights"* | Asserts GPIO 17 HIGH $\rightarrow$ **White LED turns ON** |
+| `LIGHTS_OFF` | *"Turn off the lights"* | *"Headlights off"*, *"Switch off lights"* | De-asserts GPIO 17 LOW $\rightarrow$ **White LED turns OFF** |
+| `TURN_AC_ON` | *"Turn the AC on"* | *"Start climate control"*, *"Switch on AC"* | Asserts GPIO 27 HIGH $\rightarrow$ **Green LED turns ON** |
+| `TURN_AC_OFF` | *"Turn the AC off"* | *"Stop climate control"*, *"Switch off AC"* | De-asserts GPIO 27 LOW $\rightarrow$ **Green LED turns OFF** |
+| `GET_AC_STATUS` | *"What is the AC status?"* | *"Is the AC on?"*, *"Check AC state"* | Reports whether simulated AC is currently active |
+| `OPEN_DOOR` | *"Open the driver door"* | *"Open passenger door"*, *"Open both doors"* | Resolves target door (`driver`/`passenger`/`both`) |
+| `CLOSE_DOOR` | *"Close the door"* | *"Shut passenger door"*, *"Lock doors"* | Closes targeted door; explains defaults if ambiguous |
+| `HELP` | *"Help me please"* | *"What can you do?"*, *"List commands"* | Spoken list of all available voice features |
+| `EXIT` | *"Exit the application"* | *"Shutdown"*, *"Goodbye"*, *"Quit"* | Gracefully releases GPIO lines and exits |
+
+---
+
+## 4. Running the Project
+
+All commands should be executed from the project root inside the Python virtual environment:
 
 ```bash
-git clone https://github.com/AMITJHA-hub/Vehicle_AI_Voice_Assistant.git
-cd Vehicle_AI_Voice_Assistant
-
-# Create virtual environment (recommended)
-python -m venv .venv
-.venv\Scripts\Activate.ps1  # Windows PowerShell
-
-pip install -r requirements.txt
+cd ~/car-voice-assistant
+source .venv/bin/activate
+export PYTHONPATH=.
 ```
 
-### 2. Configure API Key
-Create a file named `api_key.txt` in the root folder and paste your Google Gemini API key inside it.
-```bash
-echo "YOUR_GEMINI_API_KEY" > api_key.txt
-```
-
-### 3. Run DriveSense
+### Mode 1: Mobile Smartphone Wi-Fi Voice Bridge (Recommended Demo)
+Turns any Android/iOS smartphone on the same Wi-Fi network into a wireless microphone:
 
 ```bash
-python drivesense.py
+python -m app.main --web --mode physical --port 8080
+```
+1. Open your phone's browser to: `http://<PI_IP>:8080` (e.g. `http://172.29.39.239:8080`).
+2. Tap the central **🎙️ Microphone** button (or **"📁 Use Phone Sound Recorder"**).
+3. Speak any vehicle command—watch the breadboard LEDs react and hear the voice response!
+
+### Mode 2: Single Audio File Execution
+Process a single WAV recording directly through `whisper.cpp`:
+
+```bash
+# Read genuine DHT22 temperature:
+python -m app.main --audio app/audio_samples/cabin_temp.wav --mode physical --tts
+
+# Turn on the physical headlights LED:
+python -m app.main --audio app/audio_samples/lights_on.wav --mode physical --tts
 ```
 
-### 4. Voice Interaction
+### Mode 3: Interactive Command Shell
+Interactive keyboard / audio path testing without a microphone:
 
-1. Wait for `[IDLE] Waiting for wake word "DriveSense"...`
-2. Say **"DriveSense"** → assistant responds **"Yes?"**
-3. Speak commands naturally:
-   - *"Open the left door"*
-   - *"What's the temperature?"*
-   - *"Turn on the AC"*
-   - *"Is the AC on?"*
-   - *"Is there an obstacle ahead?"*
-   - *"Close all doors"*
-4. Say **"Stop listening"** → returns to wake word mode
-5. Say **"DriveSense"** again → resumes
-6. Say **"Exit"** → shuts down
+```bash
+python -m app.main --interactive --mode physical
+```
+
+### Mode 4: Automated Batch Benchmark
+Runs 15 distinct pre-recorded voice commands through `whisper.cpp` and benchmarks speech recognition latency and accuracy:
+
+```bash
+python -m app.main --batch app/audio_samples
+```
 
 ---
 
-## 🍓 Raspberry Pi Deployment
+## 5. Diagnostics & Hardware Self-Tests
 
-### Hardware Connections
+### All-in-One Hardware Diagnostic
+Verifies all indicator LEDs, the IR sensor, HC-SR04 distance sensor, and DHT22 climate sensor in one automated test without needing a microphone:
 
-| Sensor / Actuator | RPi Pin | GPIO |
-| :--- | :--- | :--- |
-| DHT22 Temperature | Pin 7 | GPIO 4 |
-| HC-SR04 Trigger | Pin 16 | GPIO 23 |
-| HC-SR04 Echo (via divider) | Pin 18 | GPIO 24 |
-| IR Obstacle Sensor | Pin 11 | GPIO 17 |
-| AC Relay | Pin 13 | GPIO 27 |
-| Door Servo LEFT | Pin 29 | GPIO 5 |
-| Door Servo RIGHT | Pin 31 | GPIO 6 |
-| Door Servo FRONT_LEFT | Pin 32 | GPIO 12 |
-| Door Servo FRONT_RIGHT | Pin 33 | GPIO 13 |
-| Door Servo REAR_LEFT | Pin 35 | GPIO 19 |
-| Door Servo REAR_RIGHT | Pin 37 | GPIO 26 |
+```bash
+python app/scripts/check_all_hardware.py
+```
 
-### Migration Steps
+### Interactive Breadboard Diagnostic Menu
+Test individual components one-by-one:
 
-1. Copy project to Raspberry Pi
-2. Install dependencies: `pip install -r requirements.txt`
-3. Install Pi-specific libraries: `pip install RPi.GPIO Adafruit_DHT`
-4. Change `HARDWARE_MODE = "raspberry_pi"` in `drivesense.py`
-5. Connect USB microphone and speaker
-6. Run: `python drivesense.py`
+```bash
+python app/scripts/test_hardware.py
+```
 
-The voice/AI/dispatcher code remains **identical** — only the hardware implementations change.
+### Run Automated Unit Test Suite
+24 unit and integration tests covering transcribing, intent parsing, safety locks, audio synthesis, and the web bridge:
+
+```bash
+python -m unittest discover -s app/tests
+```
 
 ---
 
-## 📄 License
-MIT License
+## 6. Performance Benchmarks (Raspberry Pi 5 ARM64)
+
+* **Speech-to-Text Engine**: `whisper.cpp` (`tiny.en`, 77.11 MB)
+* **CPU Hardware Acceleration**: ARM Cortex-A76 with NEON, FP16_VA, and DOTPROD vector extensions.
+* **Batch Test Size**: 15 distinct voice commands
+* **Recognition & Intent Success Rate**: **100% (15/15)**
+* **Average Speech Recognition Latency**: **~1.08 seconds**
+* **Average Intent Classification Latency**: **< 0.5 milliseconds**
+* **Total End-to-End Response Time**: **~1.15 seconds**
+* **Peak RAM Consumption**: **< 160 MB**

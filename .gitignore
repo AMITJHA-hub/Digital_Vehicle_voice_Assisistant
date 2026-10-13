@@ -1,21 +1,42 @@
-# Virtual environment
+# Python Virtual Environment
 .venv/
 env/
 venv/
 ENV/
 
-# Python Cache
+# Python Cache & Bytecode
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 
 # Jupyter Checkpoints
 .ipynb_checkpoints/
 
-# System / OS files
+# Operating System Files
 .DS_Store
 Thumbs.db
 
-# Offline Models
-vosk-model-en-us-0.22/
-api_key.txt
+# Whisper.cpp binary builds, models and libraries
+whisper.cpp/
+*.bin
+
+# Offline STT audio clips (can be generated via scripts/generate_stt_audio.py)
+data/stt/audio/
+
+# SSL certificates and private keys
+app/cert/*.pem
+app/cert/*.key
+app/cert/*.crt
+
+# Hardware sockets and temporary pipes
+.lgd-nfy*
+*.sock
+
+# Logs and test caches
+*.log
+.cache/
+.pytest_cache/
+
+# Reference repository clone
+reference/
