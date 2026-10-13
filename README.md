@@ -151,7 +151,44 @@ python -m app.main --batch app/audio_samples
 
 ---
 
-## 5. Diagnostics & Hardware Self-Tests
+## 5. Offline SVM Intent Classifier Pipeline
+
+The assistant features an **offline-trained Support Vector Machine (LinearSVC)** integrated with deterministic syntax parsing and compound command segmentation:
+
+- **Feature Pipeline**: Scikit-learn `Pipeline` combining Word (1–2 n-grams) and Character-wb (3–5 n-grams) TF-IDF vectors with balanced class-weighted `LinearSVC(C=1.5)`.
+- **Learned Intent Classes (20 classes)**:
+  `LIGHTS_ON`, `LIGHTS_OFF`, `GET_LIGHTS_STATUS`, `TURN_AC_ON`, `TURN_AC_OFF`, `GET_AC_STATUS`,
+  `OPEN_DOOR`, `CLOSE_DOOR`, `GET_DOOR_STATUS`, `GET_TEMPERATURE`, `GET_HUMIDITY`, `GET_DISTANCE`,
+  `GET_SENSOR_STATUS`, `EMERGENCY_ON`, `EMERGENCY_OFF`, `GREETING`, `HELP`, `EXIT`, `STOP_LISTENING`, `UNSUPPORTED`.
+- **Local Model Artifact**: `app/models/intent_svm.joblib` (120.55 KB) & `app/models/intent_svm_meta.json`.
+- **Offline Guarantee**: Requires strictly 0 external network calls. Operates entirely in RAM with sub-2 ms inference latency.
+
+### Train the SVM from Scratch
+```bash
+python scripts/train_intent_svm.py
+# Or via main CLI:
+python app/main.py --train-svm
+```
+
+### Evaluate on Held-Out Test Split
+```bash
+python scripts/evaluate_intent_svm.py --split test
+# Or via main CLI:
+python app/main.py --eval-svm --split test
+```
+
+### Test Individual Voice Commands
+```bash
+# Test intent prediction via SVM CLI:
+python scripts/evaluate_intent_svm.py --predict "turn on the headlights and switch on the ac"
+
+# Execute end-to-end in vehicle simulation mode:
+python app/main.py --mode simulation --text "Close both doors if they are open, and don't close them if only one is open."
+```
+
+---
+
+## 6. Diagnostics & Hardware Self-Tests
 
 ### All-in-One Hardware Diagnostic
 Verifies all indicator LEDs, the IR sensor, HC-SR04 distance sensor, and DHT22 climate sensor in one automated test without needing a microphone:
@@ -168,7 +205,7 @@ python app/scripts/test_hardware.py
 ```
 
 ### Run Automated Unit Test Suite
-24 unit and integration tests covering transcribing, intent parsing, safety locks, audio synthesis, and the web bridge:
+46 unit and integration tests covering SVM intent classification, compound commands, conditional doors, speech transcription, safety locks, audio synthesis, and the web bridge:
 
 ```bash
 python -m unittest discover -s app/tests
@@ -176,13 +213,18 @@ python -m unittest discover -s app/tests
 
 ---
 
-## 6. Performance Benchmarks (Raspberry Pi 5 ARM64)
+## 7. Performance Benchmarks (Raspberry Pi 5 ARM64)
 
 * **Speech-to-Text Engine**: `whisper.cpp` (`tiny.en`, 77.11 MB)
-* **CPU Hardware Acceleration**: ARM Cortex-A76 with NEON, FP16_VA, and DOTPROD vector extensions.
-* **Batch Test Size**: 15 distinct voice commands
-* **Recognition & Intent Success Rate**: **100% (15/15)**
+* **Intent Classification Engine**: Offline `LinearSVC` with Word+Char TF-IDF (120.55 KB)
+* **CPU Hardware Acceleration**: ARM Cortex-A76 with NEON, FP16_VA, and DOTPROD vector extensions
+* **SVM Layer A Test Accuracy**: **88.00%** (Held-Out Test Set)
+* **SVM Layer A Test Macro F1**: **87.90%** (Held-Out Test Set)
+* **Pipeline Layer B Overall Match**: **97.06%** (66 / 68 Held-Out Test Commands)
+* **Compound Command Handling**: **100.00%** (18 / 18 Multi-Action Sequences)
+* **Unsupported Rejection Rate**: **100.00%** (8 / 8 Out-of-Domain Requests Safely Rejected)
+* **Average SVM Inference Latency**: **~1.72 milliseconds** (p95: 2.53 ms)
 * **Average Speech Recognition Latency**: **~1.08 seconds**
-* **Average Intent Classification Latency**: **< 0.5 milliseconds**
-* **Total End-to-End Response Time**: **~1.15 seconds**
-* **Peak RAM Consumption**: **< 160 MB**
+* **Total End-to-End Latency (Microphone to Actuation)**: **~1.15 seconds**
+* **Peak RAM Consumption**: **< 175 MB**
+

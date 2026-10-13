@@ -1,0 +1,150 @@
+{
+  "version": "1.0.0",
+  "total_classes": 20,
+  "classes": [
+    {
+      "name": "LIGHTS_ON",
+      "category": "lighting",
+      "description": "Turn on vehicle headlights / exterior lamps",
+      "hardware_action": "set_lights(True)",
+      "parameters": {}
+    },
+    {
+      "name": "LIGHTS_OFF",
+      "category": "lighting",
+      "description": "Turn off vehicle headlights / exterior lamps",
+      "hardware_action": "set_lights(False)",
+      "parameters": {}
+    },
+    {
+      "name": "GET_LIGHTS_STATUS",
+      "category": "lighting",
+      "description": "Query whether headlights are currently turned on or off",
+      "hardware_action": "get_lights_status()",
+      "parameters": {}
+    },
+    {
+      "name": "TURN_AC_ON",
+      "category": "climate",
+      "description": "Turn on vehicle air conditioning / climate cooling",
+      "hardware_action": "set_ac(True)",
+      "parameters": {}
+    },
+    {
+      "name": "TURN_AC_OFF",
+      "category": "climate",
+      "description": "Turn off vehicle air conditioning / climate cooling",
+      "hardware_action": "set_ac(False)",
+      "parameters": {}
+    },
+    {
+      "name": "GET_AC_STATUS",
+      "category": "climate",
+      "description": "Query whether air conditioning is active or inactive",
+      "hardware_action": "get_ac_status()",
+      "parameters": {}
+    },
+    {
+      "name": "OPEN_DOOR",
+      "category": "doors",
+      "description": "Actuate servo to open driver, passenger, or both doors",
+      "hardware_action": "open_door(door)",
+      "parameters": {
+        "door": ["driver", "passenger", "both", "unspecified"]
+      }
+    },
+    {
+      "name": "CLOSE_DOOR",
+      "category": "doors",
+      "description": "Actuate servo to close driver, passenger, or both doors",
+      "hardware_action": "close_door(door)",
+      "parameters": {
+        "door": ["driver", "passenger", "both", "unspecified"]
+      }
+    },
+    {
+      "name": "GET_DOOR_STATUS",
+      "category": "doors",
+      "description": "Query door positions (open/closed state)",
+      "hardware_action": "get_door_status()",
+      "parameters": {}
+    },
+    {
+      "name": "GET_TEMPERATURE",
+      "category": "sensors",
+      "description": "Read ambient cabin temperature via DHT22 sensor",
+      "hardware_action": "get_temperature()",
+      "parameters": {}
+    },
+    {
+      "name": "GET_HUMIDITY",
+      "category": "sensors",
+      "description": "Read relative cabin humidity via DHT22 sensor",
+      "hardware_action": "get_humidity()",
+      "parameters": {}
+    },
+    {
+      "name": "GET_DISTANCE",
+      "category": "sensors",
+      "description": "Read front obstacle distance via HC-SR04 ultrasonic sensor",
+      "hardware_action": "get_distance()",
+      "parameters": {}
+    },
+    {
+      "name": "GET_SENSOR_STATUS",
+      "category": "sensors",
+      "description": "Perform full diagnostic telemetry readout of all connected sensors",
+      "hardware_action": "get_sensor_status()",
+      "parameters": {}
+    },
+    {
+      "name": "EMERGENCY_ON",
+      "category": "emergency",
+      "description": "Activate vehicle hazard mode (flashing all indicator LEDs)",
+      "hardware_action": "set_emergency(True)",
+      "parameters": {}
+    },
+    {
+      "name": "EMERGENCY_OFF",
+      "category": "emergency",
+      "description": "Deactivate vehicle hazard mode",
+      "hardware_action": "set_emergency(False)",
+      "parameters": {}
+    },
+    {
+      "name": "GREETING",
+      "category": "assistant",
+      "description": "Polite conversational greeting to the voice assistant",
+      "hardware_action": null,
+      "parameters": {}
+    },
+    {
+      "name": "HELP",
+      "category": "assistant",
+      "description": "Request available commands and voice capabilities",
+      "hardware_action": null,
+      "parameters": {}
+    },
+    {
+      "name": "EXIT",
+      "category": "assistant",
+      "description": "Gracefully shut down or terminate the assistant session",
+      "hardware_action": null,
+      "parameters": {}
+    },
+    {
+      "name": "STOP_LISTENING",
+      "category": "assistant",
+      "description": "Pause audio listening mode or mute the microphone",
+      "hardware_action": null,
+      "parameters": {}
+    },
+    {
+      "name": "UNSUPPORTED",
+      "category": "unsupported",
+      "description": "Out-of-scope or unsupported requests (media, windows, locks, navigation)",
+      "hardware_action": null,
+      "parameters": {}
+    }
+  ]
+}

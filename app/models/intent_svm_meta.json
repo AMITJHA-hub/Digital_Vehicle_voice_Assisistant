@@ -1,0 +1,91 @@
+{
+  "dataset_file": "commands.jsonl",
+  "dataset_hash": "54e8c5f0dd3468f9e626874a3da83850801bca31b255bd0b087ad0456afaa11b",
+  "total_dataset_records": 310,
+  "train_samples": 224,
+  "dev_samples": 48,
+  "test_samples": 50,
+  "classes": [
+    "CLOSE_DOOR",
+    "EMERGENCY_OFF",
+    "EMERGENCY_ON",
+    "EXIT",
+    "GET_AC_STATUS",
+    "GET_DISTANCE",
+    "GET_DOOR_STATUS",
+    "GET_HUMIDITY",
+    "GET_LIGHTS_STATUS",
+    "GET_SENSOR_STATUS",
+    "GET_TEMPERATURE",
+    "GREETING",
+    "HELP",
+    "LIGHTS_OFF",
+    "LIGHTS_ON",
+    "OPEN_DOOR",
+    "STOP_LISTENING",
+    "TURN_AC_OFF",
+    "TURN_AC_ON",
+    "UNSUPPORTED"
+  ],
+  "class_counts_train": {
+    "LIGHTS_ON": 25,
+    "LIGHTS_OFF": 21,
+    "GET_LIGHTS_STATUS": 4,
+    "TURN_AC_ON": 21,
+    "TURN_AC_OFF": 22,
+    "GET_AC_STATUS": 3,
+    "OPEN_DOOR": 20,
+    "CLOSE_DOOR": 20,
+    "GET_DOOR_STATUS": 5,
+    "GET_TEMPERATURE": 8,
+    "GET_HUMIDITY": 6,
+    "GET_DISTANCE": 6,
+    "GET_SENSOR_STATUS": 6,
+    "EMERGENCY_ON": 7,
+    "EMERGENCY_OFF": 7,
+    "GREETING": 5,
+    "HELP": 5,
+    "EXIT": 5,
+    "STOP_LISTENING": 4,
+    "UNSUPPORTED": 24
+  },
+  "hyperparameters": {
+    "ngram_range": [
+      1,
+      2
+    ],
+    "char_ngram_range": [
+      3,
+      5
+    ],
+    "c_param": 1.5,
+    "class_weight": "balanced",
+    "random_state": 42
+  },
+  "training_duration_seconds": 0.0745,
+  "latency_ms": {
+    "mean_latency_ms": 1.7249803590566444,
+    "p50_latency_ms": 1.5016225006547756,
+    "p90_latency_ms": 2.1517374012546497,
+    "p95_latency_ms": 2.528624299611692,
+    "p99_latency_ms": 5.499797700449558,
+    "min_latency_ms": 1.4327049993880792,
+    "max_latency_ms": 10.68718599890417,
+    "total_measurements": 1000
+  },
+  "test_metrics": {
+    "accuracy": 0.88,
+    "macro_precision": 0.9275,
+    "macro_recall": 0.875,
+    "macro_f1": 0.878968253968254,
+    "weighted_f1": 0.8758730158730158
+  },
+  "dev_metrics": {
+    "accuracy": 0.7083333333333334,
+    "macro_precision": 0.735,
+    "macro_recall": 0.7041666666666666,
+    "macro_f1": 0.6915476190476191,
+    "weighted_f1": 0.6797123015873016
+  },
+  "model_file": "intent_svm.joblib"
+}

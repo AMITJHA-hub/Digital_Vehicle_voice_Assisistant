@@ -194,10 +194,25 @@ def main():
         help="Run end-to-end Whisper STT and Intent evaluation benchmark",
     )
     parser.add_argument(
+        "--text",
+        type=str,
+        help="Execute a direct text transcript command without microphone input",
+    )
+    parser.add_argument(
+        "--train-svm",
+        action="store_true",
+        help="Train offline SVM intent classifier from scratch and save artifact",
+    )
+    parser.add_argument(
+        "--eval-svm",
+        action="store_true",
+        help="Run offline SVM and end-to-end command pipeline evaluation benchmark",
+    )
+    parser.add_argument(
         "--split",
         default="test",
         choices=["train", "dev", "test", "all"],
-        help="Split to evaluate for --eval-dataset or --eval-stt (default: test)",
+        help="Split to evaluate for --eval-dataset, --eval-stt, or --eval-svm (default: test)",
     )
 
     args = parser.parse_args()
@@ -218,6 +233,16 @@ def main():
         run_stt_evaluation(split=args.split)
         return
 
+    if args.train_svm:
+        from scripts.train_intent_svm import main as train_svm_main
+        train_svm_main()
+        return
+
+    if args.eval_svm:
+        from scripts.evaluate_intent_svm import evaluate_split
+        evaluate_split(args.split)
+        return
+
     # If web server mode is requested, run web server directly
     if args.web:
         from app.web import run_server
@@ -229,12 +254,42 @@ def main():
         print("[SAFETY NOTICE] Physical mode requested. Verifying hardware permissions...")
 
     hardware = get_hardware(args.mode)
-    transcriber = WhisperTranscriber(config)
-    classifier = IntentClassifier()
+    classifier = IntentClassifier(enable_svm=True)
     dispatcher = CommandDispatcher(hardware, config)
     tts = TextToSpeech(enabled=args.tts)
 
     try:
+        if args.text:
+            start_nlp = time.perf_counter()
+            parsed = classifier.classify(args.text)
+            nlp_latency = time.perf_counter() - start_nlp
+
+            start_dispatch = time.perf_counter()
+            dispatch_res = dispatcher.dispatch(parsed)
+            dispatch_latency = time.perf_counter() - start_dispatch
+
+            result = {
+                "file": "<text_input>",
+                "success": dispatch_res.success,
+                "error": None,
+                "transcription": args.text,
+                "intent": parsed.intent.value,
+                "entities": parsed.entities,
+                "response": dispatch_res.response_text,
+                "should_exit": dispatch_res.should_exit,
+                "should_stop_listening": dispatch_res.should_stop_listening,
+                "stt_latency_sec": 0.0,
+                "nlp_latency_ms": round(nlp_latency * 1000, 2),
+                "dispatch_latency_ms": round(dispatch_latency * 1000, 2),
+                "total_latency_sec": round(nlp_latency + dispatch_latency, 3),
+            }
+            print_result_card(result)
+            if args.tts:
+                tts.speak(dispatch_res.response_text)
+            return
+
+        transcriber = WhisperTranscriber(config)
+
         if args.audio:
             if not args.audio.is_file():
                 print(f"Error: Audio file not found at '{args.audio}'", file=sys.stderr)

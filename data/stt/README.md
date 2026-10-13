@@ -173,19 +173,30 @@ All scripts are located in `scripts/`:
    ```
    Exports `commands.jsonl` into `commands.csv`.
 
-3. **Text Intent Classification Benchmark**:
+3. **Train Offline SVM Intent Classifier**:
    ```bash
-   python scripts/eval_intents_text.py
+   python scripts/train_intent_svm.py
    ```
-   Evaluates the deterministic classifier against text utterances in `commands.jsonl` across all splits and categories.
+   Trains the 20-class Linear SVM pipeline with Word+Char TF-IDF features from scratch using the train split and outputs evaluation metrics to `data/stt/svm_eval_report.json` and model to `app/models/intent_svm.joblib`.
 
-4. **Synthetic Audio Generation**:
+4. **Evaluate SVM & Command Pipeline on Held-Out Splits**:
+   ```bash
+   python scripts/evaluate_intent_svm.py --split test
+   ```
+   Evaluates Layer A (SVM intent prediction) and Layer B (end-to-end command handling) on held-out test data.
+
+5. **Single Utterance SVM Inference CLI**:
+   ```bash
+   python scripts/evaluate_intent_svm.py --predict "turn on the headlights and switch on the ac"
+   ```
+
+6. **Synthetic Audio Generation**:
    ```bash
    python scripts/generate_stt_audio.py --split test
    ```
    Generates standard 16 kHz 16-bit mono WAV files using `espeak-ng` and `ffmpeg` in `data/stt/audio/`.
 
-5. **End-to-End STT + Intent Evaluation**:
+7. **End-to-End STT + Intent Evaluation**:
    ```bash
    python scripts/evaluate_stt.py --split test
    ```
@@ -198,6 +209,8 @@ All scripts are located in `scripts/`:
 To contribute new utterances to the dataset:
 1. Append your record to `raw_data` in `scripts/generate_dataset.py`.
 2. Ensure you assign a unique category, deterministic split (`train`, `dev`, or `test`), difficulty level, and machine-readable `expected_actions`.
-3. If introducing a new intent, update `IntentType` in `app/intents/models.py` and implement the corresponding regex in `app/intents/classifier.py`.
+3. If introducing a new intent, update `IntentType` in `app/intents/models.py`, `data/stt/intent_classes.json`, and the corresponding patterns in `app/intents/classifier.py`.
 4. Run `python scripts/generate_dataset.py` to regenerate `commands.jsonl` and `commands.csv`.
-5. Run `python scripts/validate_dataset.py` and `python scripts/eval_intents_text.py` to confirm 100% test validity.
+5. Run `python scripts/train_intent_svm.py` to retrain the SVM and update the model artifact and evaluation report.
+6. Run `python -m unittest discover -s app/tests` to confirm full regression suite passes.
+

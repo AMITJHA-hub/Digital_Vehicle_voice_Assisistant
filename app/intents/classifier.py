@@ -1,21 +1,45 @@
-"""Deterministic rule-based compound intent classifier for vehicle voice commands."""
+"""Offline compound intent classifier integrating machine-learned SVM and deterministic rules."""
 
+import logging
 import re
+from pathlib import Path
 from typing import List, Tuple, Optional, Dict, Any, Pattern
 
 from .models import IntentType, CommandStatus, Action, ParsedCommand
 from .normalizer import normalize_text, strip_polite_fillers
+from .svm_pipeline import SVMIntentPipeline
+
+logger = logging.getLogger(__name__)
 
 
 class IntentClassifier:
     """Classifies natural language utterances into predefined intents and ordered action lists.
 
-    Operates deterministically and offline without relying on cloud APIs or LLMs.
-    Supports atomic single intents, queries, and compound voice commands.
+    Combines an offline trained Linear SVM classifier with deterministic syntax parsing,
+    entity extraction, compound command segmentation, and conditional safety validation.
     """
 
-    def __init__(self):
+    def __init__(self, model_path: Optional[Path] = None, enable_svm: bool = True):
         self._rules: List[Tuple[IntentType, List[Pattern]]] = self._build_rules()
+        self.enable_svm = enable_svm
+        self.svm_pipeline: Optional[SVMIntentPipeline] = None
+        self.is_svm_active: bool = False
+
+        if enable_svm:
+            try:
+                self.svm_pipeline = SVMIntentPipeline(model_path=model_path)
+                if self.svm_pipeline.is_loaded:
+                    self.is_svm_active = True
+                    logger.info(
+                        f"SVM intent classifier active (loaded {len(self.svm_pipeline.classes)} "
+                        f"classes from {self.svm_pipeline.model_path})."
+                    )
+                else:
+                    logger.warning("SVM model artifact not loaded; operating in deterministic fallback mode.")
+            except Exception as e:
+                logger.warning(f"Failed to initialize SVM pipeline: {e}. Operating in deterministic fallback mode.")
+                self.is_svm_active = False
+
 
     def _build_rules(self) -> List[Tuple[IntentType, List[Pattern]]]:
         """Compiles prioritized regex patterns for deterministic intent recognition."""
@@ -224,7 +248,7 @@ class IntentClassifier:
         return entities
 
     def _classify_atomic(self, clause: str) -> Optional[Tuple[IntentType, Dict[str, Any]]]:
-        """Matches a single atomic clause against prioritized rules.
+        """Matches a single atomic clause using offline SVM with safety guards and deterministic fallback.
 
         Returns (IntentType, entities) or None if unmatched / unsupported.
         """
@@ -241,6 +265,17 @@ class IntentClassifier:
         if re.search(r"\b(music|radio|song|spotify|volume|navigate|navigation|route|directions?|window|windows|sunroof|seat|mirror)\b", clause):
             return None
 
+        # 1. Machine Learning Prediction via Offline SVM
+        if self.is_svm_active and self.svm_pipeline:
+            try:
+                pred = self.svm_pipeline.predict(clause)
+                if pred.intent != IntentType.UNSUPPORTED and pred.is_confident:
+                    entities = self._extract_entities(pred.intent, clause)
+                    return pred.intent, entities
+            except Exception as e:
+                logger.debug(f"SVM prediction exception: {e}")
+
+        # 2. Deterministic Rule Matching (Fallback / Verification)
         for intent, patterns in self._rules:
             for pattern in patterns:
                 if pattern.search(clause):
@@ -389,6 +424,17 @@ class IntentClassifier:
                 raw_text=text,
                 normalized_text=normalized,
                 confidence=0.0,
+            )
+
+        # Conditional door command policy:
+        # e.g., "Close both doors if they are open, and don't close them if only one is open."
+        if re.search(r"\bclose\s+(?:both\s+)?doors?\s+if\s+(?:they\s+are\s+|both\s+are\s+)?open\b", cleaned):
+            return ParsedCommand(
+                actions=[Action(type=IntentType.CLOSE_DOOR, parameters={"door": "both", "condition": "both_open_only"})],
+                status=CommandStatus.VALID,
+                raw_text=text,
+                normalized_text=normalized,
+                confidence=1.0,
             )
 
         # Single atomic check: if no compound conjunctions are present and not negated

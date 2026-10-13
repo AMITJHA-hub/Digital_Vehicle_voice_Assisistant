@@ -152,6 +152,30 @@ class CommandDispatcher:
         return DispatchResult(intent=cmd.intent, response_text=text, success=res.success)
 
     def _handle_close_door(self, cmd: ParsedCommand) -> DispatchResult:
+        condition = cmd.entities.get("condition")
+        if condition == "both_open_only":
+            door_status = self.hardware.get_door_status()
+            driver_st = door_status.get("driver", "unknown")
+            pass_st = door_status.get("passenger", "unknown")
+            if driver_st == "unknown" or pass_st == "unknown":
+                return DispatchResult(
+                    intent=cmd.intent,
+                    response_text="Cannot actuate: door position sensors are not installed and door state is unknown.",
+                    success=False,
+                )
+            if driver_st == "open" and pass_st == "open":
+                res = self.hardware.close_door("both")
+                prefix = "[Simulated] " if res.is_simulated else ""
+                text = f"{prefix}Both doors confirmed open. Closing both doors."
+                return DispatchResult(intent=cmd.intent, response_text=text, success=res.success)
+            elif driver_st == "open" or pass_st == "open":
+                open_which = "driver" if driver_st == "open" else "passenger"
+                text = f"Condition not met: only the {open_which} door is open. Neither door was closed."
+                return DispatchResult(intent=cmd.intent, response_text=text, success=True)
+            else:
+                text = "Both doors are already confirmed closed. No action taken."
+                return DispatchResult(intent=cmd.intent, response_text=text, success=True)
+
         door_target = cmd.entities.get("door", "unspecified")
         if door_target == "unspecified":
             default_target = self.config.default_door
